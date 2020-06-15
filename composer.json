@@ -1,5 +1,5 @@
 {
-    "name": "virtua/fresh-mail",
+    "name": "freshmail/magento2-plugin",
     "description": "Magento 2 FreshMail integration",
     "require": {
         "php": "~7.1.0",
