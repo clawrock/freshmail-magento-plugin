@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="freshmail_request_queue" resource="default" engine="innodb" comment="Freshmail Request Queue">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID" />
+        <column xsi:type="int" name="action" padding="2" unsigned="true" nullable="false" identity="false" default="0" comment="Action Type" />
+        <column xsi:type="text" name="params" nullable="false" />
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="processed_at" on_update="false" nullable="true" default="NULL" comment="Processed At" />
+        <column xsi:type="int" name="status" padding="2" unsigned="true" nullable="false" identity="false" comment="Status" />
+        <column xsi:type="text" name="errors" nullable="true" />
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id" />
+        </constraint>
+    </table>
+</schema>

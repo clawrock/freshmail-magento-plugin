@@ -1,0 +1,27 @@
+{
+    "name": "virtua/fresh-mail",
+    "description": "Magento 2 FreshMail integration",
+    "require": {
+        "php": "~7.1.0",
+        "freshmail/php-api-client": "^1.2.0",
+        "freshmail/rest-api": "^3.0.0",
+        "guzzlehttp/guzzle": "^6.3",
+        "monolog/monolog": "^1.24",
+        "psr/log": "^1.1",
+        "psr/http-message": "^1.0",
+        "myclabs/php-enum": "^1.7",
+        "beberlei/assert": "^2.4"
+    },
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Virtua\\FreshMail\\": ""
+        }
+    }
+}

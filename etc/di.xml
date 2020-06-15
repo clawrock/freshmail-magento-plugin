@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Virtua\FreshMail\Api\Data\SubscriberSearchResultsInterface"
+                type="Virtua\FreshMail\Model\SubscriberSearchResults" />
+    <preference for="Virtua\FreshMail\Api\Data\RequestQueueInterface"
+                type="Virtua\FreshMail\Model\RequestQueue" />
+    <preference for="Virtua\FreshMail\Api\Data\RequestQueueSearchResultsInterface"
+                type="Virtua\FreshMail\Model\RequestQueueSearchResults" />
+    <preference for="Virtua\FreshMail\Api\FullSyncSubscriberServiceInterface"
+                type="Virtua\FreshMail\Model\FullSyncSubscriberService" />
+    <preference for="Virtua\FreshMail\Api\SubscriberRepositoryInterface"
+                type="Virtua\FreshMail\Model\SubscriberRepository" />
+    <preference for="Virtua\FreshMail\Api\MailServiceInterface"
+                type="Virtua\FreshMail\Model\Mail\MailService" />
+    <preference for="Virtua\FreshMail\Api\RequestQueueServiceInterface"
+                type="Virtua\FreshMail\Model\RequestQueueService" />
+    <preference for="Virtua\FreshMail\Api\RequestQueueRepositoryInterface"
+                type="Virtua\FreshMail\Model\RequestQueueRepository" />
+    <preference for="Virtua\FreshMail\Api\SubscriberServiceInterface"
+                type="Virtua\FreshMail\Model\SubscriberService" />
+    <preference for="Virtua\FreshMail\Api\SubscriberListServiceInterface"
+                type="Virtua\FreshMail\Model\SubscriberListService" />
+    <preference for="Virtua\FreshMail\Api\FreshMailApiInterface"
+                type="Virtua\FreshMail\Model\FreshMailApi"/>
+    <preference for="Virtua\FreshMail\Api\FreshMailApiInterfaceFactory"
+                type="Virtua\FreshMail\Model\FreshMailApiFactory"/>
+    <preference for="Virtua\FreshMail\Api\RequestQueueProcessorInterface"
+                type="Virtua\FreshMail\Model\RequestQueueProcessor"/>
+    <preference for="Virtua\FreshMail\Api\FreshMailStatusServiceInterface"
+                type="Virtua\FreshMail\Model\FreshMail\StatusService"/>
+    <preference for="Virtua\FreshMail\Api\ResponseData\ResponseInterface"
+                type="Virtua\FreshMail\Model\FreshMail\Response"/>
+    <preference for="Virtua\FreshMail\Api\RequestData\Subscriber\AddInterface"
+                type="Virtua\FreshMail\Model\FreshMail\RequestData\Subscriber\Add"/>
+    <preference for="Virtua\FreshMail\Api\RequestData\Subscriber\AddMultipleInterface"
+                type="Virtua\FreshMail\Model\FreshMail\RequestData\Subscriber\AddMultiple"/>
+    <preference for="Virtua\FreshMail\Api\RequestData\Subscriber\EditInterface"
+                type="Virtua\FreshMail\Model\FreshMail\RequestData\Subscriber\Edit"/>
+    <preference for="Virtua\FreshMail\Api\RequestData\Subscriber\DeleteInterface"
+                type="Virtua\FreshMail\Model\FreshMail\RequestData\Subscriber\Delete"/>
+    <preference for="Virtua\FreshMail\Api\RequestData\Subscriber\EditMultipleInterface"
+                type="Virtua\FreshMail\Model\FreshMail\RequestData\Subscriber\EditMultiple"/>
+    <preference for="Virtua\FreshMail\Api\RequestData\Subscriber\GetInterface"
+                type="Virtua\FreshMail\Model\FreshMail\RequestData\Subscriber\Get"/>
+    <preference for="Virtua\FreshMail\Api\RequestData\Subscriber\GetMultipleInterface"
+                type="Virtua\FreshMail\Model\FreshMail\RequestData\Subscriber\GetMultiple"/>
+    <!-- todo think if this is needed -->
+    <preference for="Virtua\FreshMail\Api\RequestData\Subscriber\AddFactoryInterface"
+                type="Virtua\FreshMail\Model\FreshMail\RequestData\Subscriber\AddFactory"/>
+    <virtualType name="Virtua\FreshMail\Model\FreshMail\RequestData\Subscriber\AddFactory"
+                 type="Virtua\FreshMail\Model\FreshMail\RequestData\Subscriber\Factory">
+        <arguments>
+            <argument name="providers" xsi:type="array">
+                <item name="instanceName" xsi:type="string">
+                    Virtua\FreshMail\Model\FreshMail\RequestData\Subscriber\Add
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <!-- end todo -->
+
+    <type name="Magento\Framework\Mail\TransportInterface">
+        <plugin name="freshmail_mail_transport" type="Virtua\FreshMail\Plugin\Mail\TransportPlugin" sortOrder="1" disabled="false"/>
+    </type>
+
+    <type name="Magento\Config\Model\Config">
+        <plugin name="Virtua_FreshMail_before_save_admin_section_config" type="Virtua\FreshMail\Plugin\Adminhtml\SaveConfigPlugin"/>
+    </type>
+
+    <type name="Magento\Framework\Module\Status">
+        <plugin name="Virtua_FreshMail_module_disable_from_cli"  type="Virtua\FreshMail\Plugin\ModuleDisableByCliPlugin" />
+    </type>
+
+    <type name="Virtua\FreshMail\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Virtua\FreshMail\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">freshMail</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="debug" xsi:type="object">Virtua\FreshMail\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="virtua_freshmail" translate="label" sortOrder="999999" class="freshmail-tab">
+            <label>Freshmail</label>
+        </tab>
+        <section id="freshmail" translate="label" type="text" sortOrder="162000" showInDefault="1" showInWebsite="1" showInStore="1">
+            <resource>Virtua_FreshMail::config_freshmail</resource>
+            <class>separator-top</class>
+            <label>Freshmail Configuration</label>
+            <tab>virtua_freshmail</tab>
+            <group id="connection" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Connection</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable FreshMail Integration</label>
+                    <config_path>freshmail/connection/enabled</config_path>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Set FreshMail Integration to enable/disable.</comment>
+                </field>
+                <field id="bearer_token" translate="label" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Bearer Token</label>
+                    <config_path>freshmail/connection/bearer_token</config_path>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="freshmail_test_connect_wizard" translate="button_label" sortOrder="70" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label/>
+                    <button_label>Test Connection</button_label>
+                    <frontend_model>Virtua\FreshMail\Block\Adminhtml\System\Config\TestConnection</frontend_model>
+                </field>
+            </group>
+            <group id="transactional_emails" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Transactional Emails</label>
+                <field id="enable_api_send" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Send transactional emails by API</label>
+                    <config_path>freshmail/transactional_emails/enable_api_send</config_path>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="lists" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Subscription list</label>
+                <field id="list" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>List</label>
+                    <frontend_model>Virtua\FreshMail\Block\Adminhtml\System\Config\Form\Field\Lists\Frontend\RefreshButton</frontend_model>
+                    <source_model>Virtua\FreshMail\Block\Adminhtml\System\Config\Form\Field\Lists\Source\ListData</source_model>
+                </field>
+            </group>
+            <group id="debug" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Debug</label>
+                <field id="debug" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Debug Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

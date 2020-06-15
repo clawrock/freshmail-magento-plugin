@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <freshmail>
+            <connection>
+                <enable>0</enable>
+            </connection>
+            <transactional_emails>
+                <enable_api_send>1</enable_api_send>
+            </transactional_emails>
+        </freshmail>
+    </default>
+</config>

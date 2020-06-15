@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+    <referenceContainer name="content">
+        <block class="Virtua\FreshMail\Block\Adminhtml\Newsletter\Subscriber\Grid\SyncButton" name="freshmail.newsletter.subscribers.sync.button"/>
+    </referenceContainer>
+</layout>

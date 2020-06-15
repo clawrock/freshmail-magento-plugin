@@ -1,0 +1,6 @@
+
+<?= $block->getBeforeHtml() ?>
+    <button <?= /* @noEscape */ $block->getAttributesHtml(), $block->getUiId() ?> <?= 'data-mage-init="' . $block->getData('data-mage-init'); ?>>
+        <span><?= $block->escapeHtml($block->getLabel()) ?></span>
+    </button>
+<?= $block->getAfterHtml() ?>

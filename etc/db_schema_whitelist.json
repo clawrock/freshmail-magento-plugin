@@ -1,0 +1,16 @@
+{
+    "freshmail_request_queue": {
+        "column": {
+            "entity_id": true,
+            "action": true,
+            "params": true,
+            "created_at": true,
+            "processed_at": true,
+            "status": true,
+            "errors": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

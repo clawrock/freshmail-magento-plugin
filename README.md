@@ -1,0 +1,1 @@
+FreshMail Magento Plugin

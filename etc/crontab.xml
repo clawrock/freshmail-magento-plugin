@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="fresh_mail">
+        <job name="freshmail_run_subscribers_unsubscribed_from_freshmail"
+             instance="Virtua\FreshMail\Cron\UnsubscribedFromFreshMail" method="execute">
+            <schedule>0 1 * * *</schedule>
+        </job>
+        <job name="freshmail_process_request_queue" instance="Virtua\FreshMail\Cron\ProcessRequestQueue" method="execute">
+            <schedule>* * * * *</schedule>
+        </job>
+    </group>
+</config>
