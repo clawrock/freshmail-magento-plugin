@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace Virtua\FreshMail\Plugin\Adminhtml;
 
+use FreshMail\Api\Client\Exception\ClientException;
+use FreshMail\Api\Client\Exception\RequestException;
 use Magento\Config\Model\Config;
+use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Exception\LocalizedException;
+use Virtua\FreshMail\Api\IntegrationServiceInterface;
 use Virtua\FreshMail\Model\System\Config as FreshMailConfig;
 use Virtua\FreshMail\Exception\ApiException;
 use Virtua\FreshMail\Api\FreshMailApiInterfaceFactory;
 use Virtua\FreshMail\Api\RequestQueueServiceInterface;
-
 
 class SaveConfigPlugin
 {
@@ -37,43 +41,54 @@ class SaveConfigPlugin
      */
     private $freshMailApiFactory;
 
+    /**
+     * @var IntegrationServiceInterface
+     */
+    private $integrationService;
+
     public function __construct(
         FreshMailConfig $config,
         RequestQueueServiceInterface $requestQueueService,
-        FreshMailApiInterfaceFactory $freshMailApiFactory
+        FreshMailApiInterfaceFactory $freshMailApiFactory,
+        IntegrationServiceInterface $integrationService
     ) {
         $this->config = $config;
         $this->requestQueueService = $requestQueueService;
         $this->freshMailApiFactory = $freshMailApiFactory;
+        $this->integrationService = $integrationService;
     }
 
     /**
+     * @throws AlreadyExistsException
      * @throws ApiException
+     * @throws ClientException
+     * @throws LocalizedException
+     * @throws RequestException
      */
     public function beforeSave(Config $subject): void
     {
         $sectionId = $subject->getSection();
         if (self::SECTION_NAME === $sectionId) {
-            try {
-                $sectionData = $subject->getData();
-                $value = $sectionData['groups']['connection']['fields']['bearer_token']['value'];
+            $sectionData = $subject->getData();
+            $value = $sectionData['groups']['connection']['fields']['bearer_token']['value'];
 
-                if ($this->checkToReadFromConfig($value)) {
-                    $bearerToken = $this->config->getBearerToken();
-                } else {
-                    $bearerToken = $value;
-                }
-
-                $freshMailApi = $this->freshMailApiFactory->create($bearerToken);
-
-                if (! $freshMailApi->testConnection()) {
-                    throw new ApiException((string) __('Connection failed!'));
-                }
-
-                $this->beforeSaveModuleIsEnabled = $this->config->isEnabled();
-            } catch (\Throwable $e) {
-                throw new ApiException((string) $e->getMessage());
+            if ($this->checkToReadFromConfig($value)) {
+                $bearerToken = $this->config->getBearerToken();
+            } else {
+                $bearerToken = $value;
             }
+
+            $freshMailApi = $this->freshMailApiFactory->create($bearerToken);
+            if (! $freshMailApi->testConnection()) {
+                throw new ApiException((string)__('Connection failed!'));
+            }
+
+            $integrationNeedActivation = $this->integrationService->checkToActiveTheIntegration();
+            if ($integrationNeedActivation) {
+                $this->integrationService->initIntegration();
+            }
+
+            $this->beforeSaveModuleIsEnabled = $this->config->isEnabled();
         }
     }
 

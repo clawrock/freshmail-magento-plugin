@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Virtua\FreshMail\Api;
 
+use FreshMail\Api\Client\Exception\ClientException;
+use FreshMail\Api\Client\Exception\RequestException;
 use Virtua\FreshMail\Api\RequestData;
 use Virtua\FreshMail\Api\ResponseData\ResponseInterface;
+use Virtua\FreshMail\Exception\ApiException;
 
 interface FreshMailApiInterface
 {
@@ -27,6 +30,8 @@ interface FreshMailApiInterface
     public const API_EDIT_MULTIPLE_SUBSCRIBERS = 'subscriber/editMultiple';
     public const API_GET_MULTIPLE_SUBSCRIBERS = 'subscriber/getMultiple';
 
+    public const API_INTEGRATIONS = 'integrations';
+
     public function getLists(): array;
 
     public function addSubscriber(RequestData\Subscriber\AddInterface $subscriberAdd): void;
@@ -44,4 +49,11 @@ interface FreshMailApiInterface
     public function getMultipleSubscribers(
         RequestData\Subscriber\GetMultipleInterface $subscriberGetMultiple
     ): ResponseInterface;
+
+    /**
+     * @throws ClientException
+     * @throws RequestException
+     * @throws ApiException
+     */
+    public function integrations(RequestData\IntegrationsInterface $integrationData): void;
 }

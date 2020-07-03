@@ -9,6 +9,8 @@
                 type="Virtua\FreshMail\Model\RequestQueueSearchResults" />
     <preference for="Virtua\FreshMail\Api\FullSyncSubscriberServiceInterface"
                 type="Virtua\FreshMail\Model\FullSyncSubscriberService" />
+    <preference for="Virtua\FreshMail\Api\IntegrationServiceInterface"
+                type="Virtua\FreshMail\Model\IntegrationService" />
     <preference for="Virtua\FreshMail\Api\SubscriberRepositoryInterface"
                 type="Virtua\FreshMail\Model\SubscriberRepository" />
     <preference for="Virtua\FreshMail\Api\MailServiceInterface"
@@ -31,6 +33,8 @@
                 type="Virtua\FreshMail\Model\FreshMail\StatusService"/>
     <preference for="Virtua\FreshMail\Api\ResponseData\ResponseInterface"
                 type="Virtua\FreshMail\Model\FreshMail\Response"/>
+    <preference for="Virtua\FreshMail\Api\RequestData\IntegrationsInterface"
+                type="Virtua\FreshMail\Model\FreshMail\RequestData\Integrations" />
     <preference for="Virtua\FreshMail\Api\RequestData\Subscriber\AddInterface"
                 type="Virtua\FreshMail\Model\FreshMail\RequestData\Subscriber\Add"/>
     <preference for="Virtua\FreshMail\Api\RequestData\Subscriber\AddMultipleInterface"
