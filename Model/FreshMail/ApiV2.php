@@ -9,6 +9,9 @@ use Virtua\FreshMail\Logger\Logger;
 
 class ApiV2 extends Client
 {
+    /**
+     * @var Logger
+     */
     private $logger;
 
     public function __construct(
