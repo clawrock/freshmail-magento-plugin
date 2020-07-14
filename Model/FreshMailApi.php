@@ -8,6 +8,7 @@ use Exception;
 use FreshMail\Api\Client\Exception\ClientException;
 use FreshMail\Api\Client\Exception\RequestException;
 use FreshMail\Api\Client\Exception\ServerException;
+use FreshMail\Api\Client\Response\HttpResponse;
 use Virtua\FreshMail\Api\FreshMailApiInterface;
 use Virtua\FreshMail\Exception\ApiException;
 use Virtua\FreshMail\Model\FreshMail\ApiV2Factory;
@@ -173,9 +174,9 @@ class FreshMailApi implements FreshMailApiInterface
     }
 
     /**
+     * @throws ApiException
      * @throws ClientException
      * @throws RequestException
-     * @throws ApiException
      */
     public function integrations(RequestData\IntegrationsInterface $integrationData): void
     {

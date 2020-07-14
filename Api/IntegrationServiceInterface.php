@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Virtua\FreshMail\Api;
 
+use Exception;
 use FreshMail\Api\Client\Exception\ClientException;
 use FreshMail\Api\Client\Exception\RequestException;
 use Magento\Framework\Exception\AlreadyExistsException;
@@ -13,11 +14,12 @@ use Virtua\FreshMail\Exception\ApiException;
 interface IntegrationServiceInterface
 {
     /**
+     * @throws Exception
      * @throws AlreadyExistsException
+     * @throws ApiException
      * @throws LocalizedException
      * @throws ClientException
      * @throws RequestException
-     * @throws ApiException
      */
     public function initIntegration(): void;
 

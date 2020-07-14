@@ -6,6 +6,7 @@ namespace Virtua\FreshMail\Api;
 
 use FreshMail\Api\Client\Exception\ClientException;
 use FreshMail\Api\Client\Exception\RequestException;
+use FreshMail\Api\Client\Response\HttpResponse;
 use Virtua\FreshMail\Api\RequestData;
 use Virtua\FreshMail\Api\ResponseData\ResponseInterface;
 use Virtua\FreshMail\Exception\ApiException;

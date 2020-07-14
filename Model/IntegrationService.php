@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Virtua\FreshMail\Model;
 
+use Exception;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\ProductMetadataInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Flag\FlagResource;
-use Magento\Framework\HTTP\PhpEnvironment\ServerAddress;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
@@ -18,6 +18,7 @@ use Virtua\FreshMail\Api\FreshMailApiInterface;
 use Virtua\FreshMail\Api\FreshMailApiInterfaceFactory;
 use Virtua\FreshMail\Api\IntegrationServiceInterface;
 use Virtua\FreshMail\Api\RequestData\IntegrationsInterfaceFactory;
+use Virtua\FreshMail\Exception\ApiException;
 use Virtua\FreshMail\Logger\Logger;
 use Virtua\FreshMail\Model\Flag\IntegrationActivationFlag;
 
@@ -69,15 +70,13 @@ class IntegrationService implements IntegrationServiceInterface
     private $storeManager;
 
     /**
-     * @var ServerAddress
-     */
-    private $serverAddress;
-
-    /**
      * @var Logger
      */
     protected $logger;
 
+    /**
+     * @throws LocalizedException
+     */
     public function __construct(
         FreshMailApiInterfaceFactory $freshMailApiFactory,
         IntegrationActivationFlag $integrationActivationFlag,
@@ -87,33 +86,35 @@ class IntegrationService implements IntegrationServiceInterface
         RequestInterface $request,
         StoreManagerInterface $storeManager,
         ScopeConfigInterface $scopeConfig,
-        ServerAddress $serverAddress,
         Logger $logger
     ) {
         $this->freshMailApiFactory = $freshMailApiFactory;
         $this->integrationRequestDataFactory = $integrationRequestDataFactory;
-        $this->integrationActivationFlag = $integrationActivationFlag;
+        $this->integrationActivationFlag = $integrationActivationFlag->loadSelf();
         $this->flagResource = $flagResource;
         $this->productMetadata = $productMetadata;
         $this->request = $request;
         $this->storeManager = $storeManager;
         $this->scopeConfig = $scopeConfig;
-        $this->serverAddress = $serverAddress;
         $this->logger = $logger;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function initIntegration(): void
     {
         $version = $this->getMagentoVersion();
         $url = $this->getBaseStoreUrl();
-        $ip = $this->getShopIp(); // $ip = '172.217.22.14' ip must be public
+        $ip = $this->getShopIp();
 
-        $integrationRequest = $this->integrationRequestDataFactory->create([
+        $data = [
             'version' => $version,
             'url' => $url,
             'ip' => $ip,
-        ]);
+        ];
 
+        $integrationRequest = $this->integrationRequestDataFactory->create($data);
         $this->getFreshMailApi()->integrations($integrationRequest);
         $this->saveIntegrationActivationFlag(1);
     }
@@ -150,9 +151,27 @@ class IntegrationService implements IntegrationServiceInterface
         return $this->scopeConfig->getValue($configPath, ScopeInterface::SCOPE_WEBSITE, $website->getCode());
     }
 
+    /**
+     * @throws LocalizedException
+     * @throws Exception
+     */
     private function getShopIp(): string
     {
-        return $this->serverAddress->getServerAddress();
+        $baseStoreUrl = $this->getBaseStoreUrl();
+        $domain = parse_url($baseStoreUrl, PHP_URL_HOST);
+        $ip = gethostbyname($domain);
+
+        if (! filter_var($ip, FILTER_VALIDATE_IP)) {
+            $message = (string) __("Integration Activation failed. Failed getting IP address from hostname");
+            $this->logger->logIfDebugModeOn($message);
+            throw new Exception($message);
+        } elseif (filter_var($ip, FILTER_FLAG_NO_PRIV_RANGE)) {
+            $message = (string) __("Integration Activation failed. The IP address must not be withing a private range");
+            $this->logger->logIfDebugModeOn($message);
+            throw new Exception($message);
+        }
+
+        return $ip;
     }
 
     public function checkToActiveTheIntegration(): bool
