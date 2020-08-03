@@ -23,14 +23,14 @@ class Edit extends AbstractRequestData implements EditInterface
 
     public function setEmail(string $email): void
     {
-        $message = 'Email should be valid string';
+        $message = __('Email should be valid string (%email)', ['email' => $email]);
         Assert::that($email, $message)->email();
         $this->data['email'] = $email;
     }
 
     public function setList(string $list): void
     {
-        $message = 'List hash cannot be a blank string';
+        $message = __('List hash cannot be a blank string');
         Assert::that($list, $message)->notBlank()->string();
         $this->data['list'] = $list;
     }
@@ -38,7 +38,7 @@ class Edit extends AbstractRequestData implements EditInterface
     public function setState(?int $state = null): void
     {
         if (null !== $state) {
-            $message = 'Invalid value (' . $state . ') in state param';
+            $message = __('Invalid value (%state) in state param', ['state' => $state]);
             Assert::that($state, $message)->choice(StatusService::allFreshMailSubscriberStatuses());
             $this->data['state'] = (string) $state;
         }

@@ -80,7 +80,7 @@ class SaveConfigPlugin
 
             $freshMailApi = $this->freshMailApiFactory->create($bearerToken);
             if (! $freshMailApi->testConnection()) {
-                throw new ApiException((string)__('Connection failed!'));
+                throw new ApiException((string) __('Connection failed!'));
             }
 
             $integrationNeedActivation = $this->integrationService->checkToActiveTheIntegration();

@@ -1,0 +1,42 @@
+"Freshmail Synchronization","Synchronizacja z Freshmailem"
+Refresh,Odśwież
+"-- Please Select --","-- Proszę wybrać --"
+"Field bearer token should not be empty!","Pole bearer token nie może być puste!"
+"Email should be valid string (%email)","Adres email powinien być poprawnym ciągiem (%email)"
+"List hash cannot be a blank string","Hash listy nie może być pustym ciągiem"
+"Invalid value (%state) in state param","Niepoprawna wartość (%state) w parametrze state"
+"Invalid value (%confirm) in confirm param","Invalid value (%confirm) w parametrze confirm"
+"Integration Activation failed. Please try again later","Aktywacja integracji nie powiodła się. Proszę spróbować później"
+"Some errors have been occurred during FreshMail sync.","Pewne błędy wystąpiły podczas synchronizacji z FreshMail."
+"Not configured hash list for given store id: %storeId","Nieskonfigurowano lista hash dla danego sklepu z id: %storeId"
+"Given list:  %listHash doest not exist on FreshMail account.","Podana lista:  %listHash nie istnieje na koncie FreshMail."
+"Integration Activation failed. Failed getting IP address from hostname","Aktywacja integracji nie powiodła się. Niepowodzenie przy pobieraniu adresu IP z nazwy hosta"
+"Integration Activation failed. The IP address must not be within a private range","Aktywacja integracji nie powiodła się. Adres IP nie może znajdować się w prywatnym zakresie"
+"Pending","Oczekujący"
+Success,Sukces
+Error,Błąd
+"Unknown Status","Nieznany status"
+"Add a new subscriber","Dodanie nowego subskrybenta"
+"Edit existing subscriber","Edycja istniejącego subskrybenta"
+"Unsubscribe subscriber","Wypisz subsckrybenta"
+"Delete subscriber","Usunięcie subskrybenta"
+"Full Sync Emails","Pełna synchronizacja emalii"
+"Unknown Action","Nieznana akcja"
+"Connection failed!","Połączenie nie powiodło się!"
+"Connection Successful!","Połączenie nawiązano poprawnie!"
+Freshmail,Freshmail
+"Freshmail Configuration","Konfiguracja Freshmaila"
+Connection,Połączenie
+"Enable FreshMail Integration","Włącz inegrację FreshMail"
+"Set FreshMail Integration to enable/disable.","Ustaw integrację FreshMail na włączoną/wyłączoną."
+"Bearer Token","Bearer Token"
+"Test Connection","Test Połączenia"
+"Transactional Emails","Maile transakcyjne"
+"Send transactional emails by API","Wysyłaj maile transakcyjne przez API"
+"Subscription list","Lista subskrybentów"
+List,Lista
+Debug,Debugowanie
+"Debug Mode","Tryb debugowania"
+Yes,Tak
+No,Nie
+"Save Config","Zapisz Konfigurację"

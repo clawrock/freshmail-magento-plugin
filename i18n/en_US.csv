@@ -1,0 +1,42 @@
+"Freshmail Synchronization","Freshmail Synchronization"
+Refresh,Refresh
+"-- Please Select --","-- Please Select --"
+"Field bearer token should not be empty!","Field bearer token should not be empty!"
+"Email should be valid string (%email)","Email should be valid string (%email)"
+"List hash cannot be a blank string","List hash cannot be a blank string"
+"Invalid value (%state) in state param","Invalid value (%state) in state param"
+"Invalid value (%confirm) in confirm param","Invalid value (%confirm) in confirm param"
+"Integration Activation failed. Please try again later","Integration Activation failed. Please try again later"
+"Some errors have been occurred during FreshMail sync.","Some errors have been occurred during FreshMail sync."
+"Not configured hash list for given store id: %storeId","Not configured hash list for given store id: %storeId"
+"Given list:  %listHash doest not exist on FreshMail account.","Given list:  %listHash doest not exist on FreshMail account."
+"Integration Activation failed. Failed getting IP address from hostname","Integration Activation failed. Failed getting IP address from hostname"
+"Integration Activation failed. The IP address must not be withing a private range","Integration Activation failed. The IP address must not be withing a private range"
+Pending,Pending
+Success,Success
+Error,Error
+"Unknown Status","Unknown Status"
+"Add a new subscriber","Add a new subscriber"
+"Edit existing subscriber","Edit existing subscriber"
+"Unsubscribe user","Unsubscribe user"
+"Delete subscriber","Delete subscriber"
+"Full Sync Emails","Full Sync Emails"
+"Unknown Action","Unknown Action"
+"Connection failed!","Connection failed!"
+"Connection Successful!","Connection Successful!"
+Freshmail,Freshmail
+"Freshmail Configuration","Freshmail Configuration"
+Connection,Connection
+"Enable FreshMail Integration","Enable FreshMail Integration"
+"Set FreshMail Integration to enable/disable.","Set FreshMail Integration to enable/disable."
+"Bearer Token","Bearer Token"
+"Test Connection","Test Connection"
+"Transactional Emails","Transactional Emails"
+"Send transactional emails by API","Send transactional emails by API"
+"Subscription list","Subscription list"
+List,List
+Debug,Debug
+"Debug Mode","Debug Mode"
+Yes,Yes
+No,No
+"Save Config","Save Config"

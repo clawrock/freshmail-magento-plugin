@@ -39,7 +39,7 @@ class GetMultiple extends AbstractRequestData implements GetMultipleInterface
             );
         }
 
-        $message = 'Email should be valid string (' . $email . ')';
+        $message = __('Email should be valid string (%email)', ['email' => $email]);
         Assert::that($email, $message)->email();
 
         $this->data['subscribers'][] = [
@@ -72,7 +72,7 @@ class GetMultiple extends AbstractRequestData implements GetMultipleInterface
 
     public function setList(string $list): void
     {
-        $message = 'List hash cannot be a blank string';
+        $message = __('List hash cannot be a blank string');
         Assert::that($list, $message)->notBlank()->string();
         $this->data['list'] = $list;
     }

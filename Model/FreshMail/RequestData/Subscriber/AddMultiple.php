@@ -32,7 +32,7 @@ class AddMultiple extends AbstractRequestData implements AddMultipleInterface
         $this->setState($state);
         $this->setConfirm($confirm);
     }
-    
+
     /**
      * @throws LogicException
      */
@@ -43,6 +43,9 @@ class AddMultiple extends AbstractRequestData implements AddMultipleInterface
                 'API limit allows to send up to ' . FreshMailApiInterface::API_REQUEST_LIMIT . ' subscribers.'
             );
         }
+
+        $message = __('Email should be valid string (%email)', ['email' => $email]);
+        Assert::that($email, $message)->email();
 
         $this->data['subscribers'][] = [
             'email' => $email,
@@ -72,7 +75,7 @@ class AddMultiple extends AbstractRequestData implements AddMultipleInterface
     public function setState(?int $state = null): void
     {
         if (null !== $state) {
-            $message = 'Invalid value (' . $state . ') in state param';
+            $message = __('Invalid value (%state) in state param', ['state' => $state]);
             Assert::that($state, $message)->choice(StatusService::allFreshMailSubscriberStatuses());
             $this->data['state'] = $state;
         }
@@ -85,7 +88,7 @@ class AddMultiple extends AbstractRequestData implements AddMultipleInterface
 
     public function setList(string $list): void
     {
-        $message = 'List hash cannot be a blank string';
+        $message = __('List hash cannot be a blank string');
         Assert::that($list, $message)->notBlank()->string();
         $this->data['list'] = $list;
     }
@@ -97,7 +100,7 @@ class AddMultiple extends AbstractRequestData implements AddMultipleInterface
 
     public function setConfirm(int $confirm = 0): void
     {
-        $message = 'Invalid value (' . $confirm . ') in confirm param';
+        $message = __('Invalid value (%confirm) in confirm param', ['confirm' => $confirm]);
         Assert::that($confirm, $message)->choice([0, 1]);
         $this->data['confirm'] = $confirm;
     }

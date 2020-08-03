@@ -8,7 +8,6 @@ use Exception;
 use FreshMail\Api\Client\Exception\RequestException;
 use FreshMail\Api\Client\Exception\ServerException;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Phrase;
 use Magento\Newsletter\Model\Subscriber as MagentoSubscriber;
 use Virtua\FreshMail\Api\FreshMailApiInterfaceFactory;
 use Virtua\FreshMail\Api\FreshMailApiInterface;
@@ -138,7 +137,7 @@ class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
         }
 
         if ($this->errors) {
-            throw new LocalizedException(new Phrase('Some errors have been occurred during FreshMail sync.'));
+            throw new LocalizedException(__('Some errors have been occurred during FreshMail sync.'));
         }
     }
 
@@ -151,7 +150,8 @@ class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
     private function checkIfListExists(string $listHash, int $storeId): bool
     {
         if (empty($listHash)) {
-            throw new LocalizedException(new Phrase('Not configured hash list for given store id:  ' . $storeId));
+            $message = __('Not configured hash list for given store id: %storeId', ['storeId' => $storeId]);
+            throw new LocalizedException($message);
         }
 
         return $this->subscriberListService->hashListExists($listHash);
@@ -166,9 +166,8 @@ class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
     {
         $listHash = $this->config->getListHashByStoreId($storeId);
         if (! $this->checkIfListExists($listHash, $storeId)) {
-            throw new LocalizedException(
-                __('Given list:  ' . $listHash . ' doest not exist on FreshMail account.')
-            );
+            $message = __('Given list:  %listHash doest not exist on FreshMail account.', ['listHash' => $listHash]);
+            throw new LocalizedException($message);
         }
 
         $index = 0;

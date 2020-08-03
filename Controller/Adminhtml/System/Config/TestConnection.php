@@ -63,8 +63,8 @@ class TestConnection extends Action implements HttpPostActionInterface
 
         try {
             if (empty($options['bearer_token'])) {
-                $error = 'Field bearer token should not be empty!';
-                throw new LocalizedException(__($error));
+                $error = __('Field bearer token should not be empty!');
+                throw new LocalizedException($error);
             }
             $bearerToken = $this->resolveBearerToken($options['bearer_token']);
             $freshMailApi = $this->freshMailApiFactory->create($bearerToken);

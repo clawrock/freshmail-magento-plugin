@@ -36,7 +36,7 @@ class Add extends AbstractRequestData implements AddInterface
 
     public function setEmail(string $email): void
     {
-        $message = 'Email should be valid string (' . $email . ')';
+        $message = __('Email should be valid string (%email)', ['email' => $email]);
         Assert::that($email, $message)->email();
         $this->data['email'] = $email;
     }
@@ -48,7 +48,7 @@ class Add extends AbstractRequestData implements AddInterface
 
     public function setList(string $list): void
     {
-        $message = 'List hash cannot be a blank string';
+        $message = __('List hash cannot be a blank string');
         Assert::that($list, $message)->notBlank()->string();
         $this->data['list'] = $list;
     }
@@ -64,7 +64,7 @@ class Add extends AbstractRequestData implements AddInterface
             $state = FreshMailStatusServiceInterface::SUBSCRIBER_STATUS_AWAITS_ACTIVATION;
         }
 
-        $message = 'Invalid value (' . $state . ') in state param';
+        $message = __('Invalid value (%state) in state param', ['state' => $state]);
         Assert::that($state, $message)->choice(StatusService::allFreshMailSubscriberStatuses());
         $this->data['state'] = $state;
     }
@@ -76,7 +76,7 @@ class Add extends AbstractRequestData implements AddInterface
 
     public function setConfirm(int $confirm = 0): void
     {
-        $message = 'Invalid value (' . $confirm . ') in confirm param';
+        $message = __('Invalid value (%confirm) in confirm param', ['confirm' => $confirm]);
         Assert::that($confirm, $message)->choice([0, 1]);
         $this->data['confirm'] = $confirm;
     }

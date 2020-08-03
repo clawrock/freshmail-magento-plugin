@@ -70,7 +70,7 @@ class EditMultiple extends AbstractRequestData implements EditMultipleInterface
     public function setState(?int $state = null): void
     {
         if (null !== $state) {
-            $message = 'Invalid value (' . $state . ') in state param';
+            $message = __('Invalid value (%state) in state param', ['state' => $state]);
             Assert::that($state, $message)->choice(StatusService::allFreshMailSubscriberStatuses());
             $this->data['state'] = $state;
         }
@@ -83,7 +83,7 @@ class EditMultiple extends AbstractRequestData implements EditMultipleInterface
 
     public function setList(string $list): void
     {
-        $message = 'List hash cannot be a blank string';
+        $message = __('List hash cannot be a blank string');
         Assert::that($list, $message)->notBlank()->string();
         $this->data['list'] = $list;
     }

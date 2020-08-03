@@ -13,7 +13,7 @@
         "beberlei/assert": "^2.4"
     },
     "type": "magento2-module",
-    "version": "0.4.5",
+    "version": "0.4.6",
     "keywords": ["freshmail", "magento2"],
     "license": "GPL-3.0",
     "autoload": {

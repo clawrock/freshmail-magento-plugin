@@ -20,7 +20,7 @@ class Delete extends AbstractRequestData implements DeleteInterface
 
     public function setEmail(string $email): void
     {
-        $message = 'Email should be valid string (' . $email . ')';
+        $message = __('Email should be valid string (%email)', ['email' => $email]);
         Assert::that($email, $message)->email();
         $this->data['email'] = $email;
     }
@@ -32,7 +32,7 @@ class Delete extends AbstractRequestData implements DeleteInterface
 
     public function setList(string $list): void
     {
-        $message = 'List hash cannot be a blank string';
+        $message = __('List hash cannot be a blank string');
         Assert::that($list, $message)->notBlank()->string();
         $this->data['list'] = $list;
     }
