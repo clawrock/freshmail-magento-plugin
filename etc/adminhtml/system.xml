@@ -34,7 +34,7 @@
                 </field>
             </group>
             <group id="transactional_emails" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Transactional Emails</label>
+                <label>Transaction Emails</label>
                 <field id="enable_api_send" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Send transactional emails by FreshMail servers</label>
                     <config_path>freshmail/transactional_emails/enable_api_send</config_path>

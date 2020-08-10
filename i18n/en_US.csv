@@ -31,7 +31,7 @@ Freshmail,Freshmail
 "Set FreshMail Integration to enable/disable.","Set FreshMail Integration to enable/disable."
 "Bearer Token","Bearer Token"
 "Test Connection","Test Connection"
-"Transactional Emails","Transactional Emails"
+"Transaction Emails","Transactional Emails"
 "Send transactional emails by FreshMail servers","Send transactional emails by FreshMail servers"
 "Recipient list","Recipient list"
 "Choose a recipient list in FreshMail with which you want to synchronize subscribers and shop clients","Choose a recipient list in FreshMail with which you want to synchronize subscribers and shop clients"
@@ -40,4 +40,3 @@ Freshmail,Freshmail
 Yes,Yes
 No,No
 "Save Config","Save Config"
-"Transactional Emails","Transactional Emails"
