@@ -14,7 +14,7 @@ class Banner extends Fieldset
     public function render(AbstractElement $element): string
     {
         return <<<EOT
-<a href="{$this->getFreshMailBannerLink()}">
+<a href="{$this->getFreshMailBannerLink()}" target="_blank">
     <img style="margin-bottom: 20px" src="{$this->getBannerImage()}" alt="FreshMail Transactional Banner">
 </a>
 EOT;

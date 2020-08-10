@@ -14,7 +14,7 @@
                 <frontend_model>Virtua\FreshMail\Block\Adminhtml\System\Config\Banner</frontend_model>
             </group>
             <group id="connection" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Connection</label>
+                <label>Connect shop with FreshMail</label>
                 <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Enable FreshMail Integration</label>
                     <config_path>freshmail/connection/enabled</config_path>
@@ -36,23 +36,23 @@
             <group id="transactional_emails" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Transactional Emails</label>
                 <field id="enable_api_send" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Send transactional emails by API</label>
+                    <label>Send transactional emails by FreshMail servers</label>
                     <config_path>freshmail/transactional_emails/enable_api_send</config_path>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>
             <group id="lists" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Subscription list</label>
+                <label>Recipient list</label>
                 <field id="list" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>List</label>
+                    <label>Choose a recipient list in FreshMail with which you want to synchronize subscribers and shop clients</label>
                     <frontend_model>Virtua\FreshMail\Block\Adminhtml\System\Config\Form\Field\Lists\Frontend\RefreshButton</frontend_model>
                     <source_model>Virtua\FreshMail\Block\Adminhtml\System\Config\Form\Field\Lists\Source\ListData</source_model>
                 </field>
             </group>
             <group id="debug" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
-                <label>Debug</label>
+                <label>Debug Mode</label>
                 <field id="debug" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
-                    <label>Debug Mode</label>
+                    <label>Enable debug mode in order to help programmers find and resolve issues related with FreshMail module</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>

@@ -26,17 +26,18 @@ Error,Error
 "Connection Successful!","Connection Successful!"
 Freshmail,Freshmail
 "Freshmail Configuration","Freshmail Configuration"
-Connection,Connection
+"Connect shop with FreshMail","Connect shop with FreshMail"
 "Enable FreshMail Integration","Enable FreshMail Integration"
 "Set FreshMail Integration to enable/disable.","Set FreshMail Integration to enable/disable."
 "Bearer Token","Bearer Token"
 "Test Connection","Test Connection"
 "Transactional Emails","Transactional Emails"
-"Send transactional emails by API","Send transactional emails by API"
-"Subscription list","Subscription list"
-List,List
-Debug,Debug
+"Send transactional emails by FreshMail servers","Send transactional emails by FreshMail servers"
+"Recipient list","Recipient list"
+"Choose a recipient list in FreshMail with which you want to synchronize subscribers and shop clients","Choose a recipient list in FreshMail with which you want to synchronize subscribers and shop clients"
+"Enable debug mode in order to help programmers find and resolve issues related with FreshMail module","Enable debug mode in order to help programmers find and resolve issues related with FreshMail module"
 "Debug Mode","Debug Mode"
 Yes,Yes
 No,No
 "Save Config","Save Config"
+"Transactional Emails","Transactional Emails"

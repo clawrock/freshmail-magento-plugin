@@ -26,17 +26,18 @@ Error,Błąd
 "Connection Successful!","Połączenie nawiązano poprawnie!"
 Freshmail,Freshmail
 "Freshmail Configuration","Konfiguracja Freshmaila"
-Connection,Połączenie
+"Connect shop with FreshMail","Połącz sklep z FreshMailem"
 "Enable FreshMail Integration","Włącz inegrację FreshMail"
 "Set FreshMail Integration to enable/disable.","Ustaw integrację FreshMail na włączoną/wyłączoną."
 "Bearer Token","Bearer Token"
 "Test Connection","Test Połączenia"
 "Transactional Emails","Maile transakcyjne"
-"Send transactional emails by API","Wysyłaj maile transakcyjne przez API"
-"Subscription list","Lista subskrybentów"
-List,Lista
-Debug,Debugowanie
+"Send transactional emails by FreshMail servers","Wysyłaj maile transakcyjne przez serwery FreshMail"
+"Recipient list","Lista odbiorców"
+"Choose a recipient list in FreshMail with which you want to synchronize subscribers and shop clients","Wybierz listę odbiorców we FreshMailu z którą chcesz synchronizować subskrybentów i klientów sklepu."
 "Debug Mode","Tryb debugowania"
+"Enable debug mode in order to help programmers find and resolve issues related with FreshMail module","Włącz tryb ułatwiający programistom znajdowanie i rozwiązywania usterek związanym z działaniem modułu FreshMail"
 Yes,Tak
 No,Nie
 "Save Config","Zapisz Konfigurację"
+"Transactional Emails","Maile transakcyjne"
