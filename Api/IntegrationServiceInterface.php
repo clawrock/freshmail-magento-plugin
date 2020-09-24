@@ -23,5 +23,5 @@ interface IntegrationServiceInterface
      */
     public function initIntegration(): void;
 
-    public function checkToActiveTheIntegration(): bool;
+    public function isIntegrationNeeded(): bool;
 }

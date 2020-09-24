@@ -11,6 +11,8 @@ use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\LocalizedException;
+use Virtua\FreshMail\Api\FreshMailApiInterface;
+use Virtua\FreshMail\Api\IntegrationServiceInterfaceFactory;
 use Virtua\FreshMail\Api\IntegrationServiceInterface;
 use Virtua\FreshMail\Model\System\Config as FreshMailConfig;
 use Virtua\FreshMail\Exception\ApiException;
@@ -42,7 +44,12 @@ class SaveConfigPlugin
     private $freshMailApiFactory;
 
     /**
-     * @var IntegrationServiceInterface
+     * @var IntegrationServiceInterfaceFactory
+     */
+    private $integrationServiceFactory;
+
+    /**
+     * @var IntegrationServiceInterface|null
      */
     private $integrationService;
 
@@ -50,12 +57,12 @@ class SaveConfigPlugin
         FreshMailConfig $config,
         RequestQueueServiceInterface $requestQueueService,
         FreshMailApiInterfaceFactory $freshMailApiFactory,
-        IntegrationServiceInterface $integrationService
+        IntegrationServiceInterfaceFactory $integrationServiceFactory
     ) {
         $this->config = $config;
         $this->requestQueueService = $requestQueueService;
         $this->freshMailApiFactory = $freshMailApiFactory;
-        $this->integrationService = $integrationService;
+        $this->integrationServiceFactory = $integrationServiceFactory;
     }
 
     /**
@@ -82,10 +89,10 @@ class SaveConfigPlugin
             if (! $freshMailApi->testConnection()) {
                 throw new ApiException((string) __('Connection failed!'));
             }
-
-            $integrationNeedActivation = $this->integrationService->checkToActiveTheIntegration();
-            if ($integrationNeedActivation) {
-                $this->integrationService->initIntegration();
+            
+            $integrationService = $this->getIntegrationService($freshMailApi);
+            if ($integrationService->isIntegrationNeeded()) {
+                $integrationService->initIntegration();
             }
 
             $this->beforeSaveModuleIsEnabled = $this->config->isEnabled();
@@ -107,6 +114,11 @@ class SaveConfigPlugin
                 $this->requestQueueService->addFullSyncToQueue();
             }
         }
+    }
+
+    private function getIntegrationService(FreshMailApiInterface $freshMailApi): IntegrationServiceInterface
+    {
+        return $this->integrationServiceFactory->create($freshMailApi);
     }
 
     private function checkToReadFromConfig(string $string): bool //TODO move to a separate class

@@ -78,7 +78,7 @@ class IntegrationService implements IntegrationServiceInterface
      * @throws LocalizedException
      */
     public function __construct(
-        FreshMailApiInterfaceFactory $freshMailApiFactory,
+        FreshMailApiInterface $freshMailApi,
         IntegrationActivationFlag $integrationActivationFlag,
         FlagResource $flagResource,
         IntegrationsInterfaceFactory $integrationRequestDataFactory,
@@ -88,7 +88,7 @@ class IntegrationService implements IntegrationServiceInterface
         ScopeConfigInterface $scopeConfig,
         Logger $logger
     ) {
-        $this->freshMailApiFactory = $freshMailApiFactory;
+        $this->freshMailApi = $freshMailApi;
         $this->integrationRequestDataFactory = $integrationRequestDataFactory;
         $this->integrationActivationFlag = $integrationActivationFlag->loadSelf();
         $this->flagResource = $flagResource;
@@ -115,17 +115,8 @@ class IntegrationService implements IntegrationServiceInterface
         ];
 
         $integrationRequest = $this->integrationRequestDataFactory->create($data);
-        $this->getFreshMailApi()->integrations($integrationRequest);
+        $this->freshMailApi->integrations($integrationRequest);
         $this->saveIntegrationActivationFlag(1);
-    }
-
-    private function getFreshMailApi(): FreshMailApiInterface
-    {
-        if (! $this->freshMailApi) {
-            $this->freshMailApi = $this->freshMailApiFactory->create();
-        }
-
-        return $this->freshMailApi;
     }
 
     private function getMagentoVersion(): string
@@ -174,7 +165,7 @@ class IntegrationService implements IntegrationServiceInterface
         return $ip;
     }
 
-    public function checkToActiveTheIntegration(): bool
+    public function isIntegrationNeeded(): bool
     {
         if ($this->integrationActivationFlag->hasData('flag_data')) {
             $flagData = (bool) $this->integrationActivationFlag->getFlagData();

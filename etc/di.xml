@@ -11,6 +11,8 @@
                 type="Virtua\FreshMail\Model\FullSyncSubscriberService" />
     <preference for="Virtua\FreshMail\Api\IntegrationServiceInterface"
                 type="Virtua\FreshMail\Model\IntegrationService" />
+    <preference for="Virtua\FreshMail\Api\IntegrationServiceInterfaceFactory"
+                type="Virtua\FreshMail\Model\IntegrationServiceFactory" />
     <preference for="Virtua\FreshMail\Api\SubscriberRepositoryInterface"
                 type="Virtua\FreshMail\Model\SubscriberRepository" />
     <preference for="Virtua\FreshMail\Api\MailServiceInterface"
