@@ -47,6 +47,9 @@ interface FreshMailApiInterface
 
     public function editMultipleSubscribers(RequestData\Subscriber\EditMultipleInterface $editMultiple): void;
 
+    /**
+     * @throws Exception
+     */
     public function getMultipleSubscribers(
         RequestData\Subscriber\GetMultipleInterface $subscriberGetMultiple
     ): ResponseInterface;

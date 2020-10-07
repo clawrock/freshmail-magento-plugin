@@ -208,13 +208,41 @@ class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
      */
     private function checkSubscribersAndAssignToAction(Subscriber\GetMultipleInterface $requestData): void
     {
-        $response = $this->freshMailApi->getMultipleSubscribers($requestData);
-
-        $subscribersToAddCheck = $response->getDataErrors() ?? [];
-        $subscribersToEditCheck = $response->getData() ?? [];
-
+        try{
+            $response = $this->freshMailApi->getMultipleSubscribers($requestData);
+            $subscribersToAddCheck = $response->getDataErrors() ?? [];
+            $subscribersToEditCheck = $response->getData() ?? [];
+        } catch (\Exception $e) {
+            if ($this->checkIfExceptionIsSubscribersMissing($e)) {
+                $subscribersToAddCheck = $this->makeArrayForAdding($requestData->getSubscribers());
+                $subscribersToEditCheck = [];
+            } else {
+                throw $e;
+            }
+        }
+        
         $this->addToEdit($subscribersToEditCheck);
         $this->addToAdd($subscribersToAddCheck);
+    }
+
+    private function checkIfExceptionIsSubscribersMissing(\Exception $e): bool
+    {
+        $matches = [];
+        preg_match('/"code":1311/', $e->getMessage(), $matches);
+        return count($matches) ? true : false;
+    }
+
+    private function makeArrayForAdding(array $subscribers): array
+    {
+        $result = [];
+        foreach ($subscribers as $subscriber) {
+            $result[] = [
+                'email' => $subscriber['email'],
+                'code' => FreshMailApiInterface::ERROR_GET_SUBSCRIBER_NOT_EXISTS
+            ];
+        }
+
+        return $result;
     }
 
     private function addToAdd(array $subscribersToAddCheck): void
