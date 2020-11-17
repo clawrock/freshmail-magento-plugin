@@ -2,7 +2,7 @@
     "name": "freshmail/magento2-plugin",
     "description": "Magento 2 FreshMail integration",
     "require": {
-        "php": "~7.1.3||~7.2.0||~7.3.0",
+        "php": "~7.1.3||~7.2.0||~7.3.0||~7.4.0",
         "freshmail/php-api-client": "^1.2.0",
         "freshmail/rest-api": "^3.0.0",
         "guzzlehttp/guzzle": "^6.3",
@@ -13,7 +13,7 @@
         "beberlei/assert": "^2.4"
     },
     "type": "magento2-module",
-    "version": "0.4.10",
+    "version": "0.4.11",
     "keywords": ["freshmail", "magento2"],
     "license": "GPL-3.0",
     "autoload": {

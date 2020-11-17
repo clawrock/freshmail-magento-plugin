@@ -10,7 +10,7 @@ use Virtua\FreshMail\Api\FreshMailApiInterfaceFactory;
 use Virtua\FreshMail\Api\FreshMailApiInterface;
 use Virtua\FreshMail\Api\RequestQueueServiceInterface;
 use Virtua\FreshMail\Api\RequestData\Subscriber;
-use Virtua\FreshMail\Api\FullSyncSubscriberServiceInterface;
+use Virtua\FreshMail\Api\FullSyncSubscriberServiceInterfaceFactory;
 
 class RequestQueueProcessor implements RequestQueueProcessorInterface
 {
@@ -42,9 +42,9 @@ class RequestQueueProcessor implements RequestQueueProcessorInterface
     private $subscriberDeleteFactory;
 
     /**
-     * @var FullSyncSubscriberServiceInterface
+     * @var FullSyncSubscriberServiceInterfaceFactory
      */
-    private $fullSyncService;
+    private $fullSyncServiceFactory;
 
     public function __construct(
         FreshMailApiInterfaceFactory $freshMailApiFactory,
@@ -52,14 +52,14 @@ class RequestQueueProcessor implements RequestQueueProcessorInterface
         Subscriber\AddInterfaceFactory $subscriberAddFactory,
         Subscriber\EditInterfaceFactory $subscriberEditFactory,
         Subscriber\DeleteInterfaceFactory $subscriberDeleteFactory,
-        FullSyncSubscriberServiceInterface $fullSyncService
+        FullSyncSubscriberServiceInterfaceFactory $fullSyncServiceFactory
     ) {
         $this->freshMailApiFactory = $freshMailApiFactory;
         $this->requestQueueService = $requestQueueService;
         $this->subscriberAddFactory = $subscriberAddFactory;
         $this->subscriberEditFactory = $subscriberEditFactory;
         $this->subscriberDeleteFactory = $subscriberDeleteFactory;
-        $this->fullSyncService = $fullSyncService;
+        $this->fullSyncServiceFactory = $fullSyncServiceFactory;
     }
 
     public function process(RequestQueueInterface $requestQueue): void
@@ -123,6 +123,6 @@ class RequestQueueProcessor implements RequestQueueProcessorInterface
 
     private function actionFullSync(RequestQueueInterface $requestQueue): void
     {
-        $this->fullSyncService->execute();
+        $this->fullSyncServiceFactory->create()->execute();
     }
 }
