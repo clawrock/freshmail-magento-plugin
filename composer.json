@@ -10,10 +10,10 @@
         "psr/log": "^1.1",
         "psr/http-message": "^1.0",
         "myclabs/php-enum": "^1.7",
-        "beberlei/assert": "^2.4"
+        "beberlei/assert": "^2.4||^3.0"
     },
     "type": "magento2-module",
-    "version": "0.4.11",
+    "version": "0.4.12",
     "keywords": ["freshmail", "magento2"],
     "license": "GPL-3.0",
     "autoload": {
