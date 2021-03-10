@@ -12,6 +12,13 @@
                     </resource>
                 </resource>
             </resource>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Reports::report">
+                    <resource id="Virtua_FreshMail::reportroot" title="FreshMail" translate="title" sortOrder="45">
+                        <resource id="Virtua_Freshmail::report_abandonedcart" title="Abandoned Cart" translate="title" sortOrder="10"/>
+                    </resource>
+                </resource>
+            </resource>
         </resources>
     </acl>
 </config>

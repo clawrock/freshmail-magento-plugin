@@ -159,7 +159,7 @@ class RequestQueue extends AbstractModel implements RequestQueueInterface, Ident
 
     public function setParams(string $params): void
     {
-        $this->setData(self::PARAMS, $data);
+        $this->setData(self::PARAMS, $params);
     }
 
     public function getCreatedAt(): string

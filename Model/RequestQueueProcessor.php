@@ -10,7 +10,7 @@ use Virtua\FreshMail\Api\FreshMailApiInterfaceFactory;
 use Virtua\FreshMail\Api\FreshMailApiInterface;
 use Virtua\FreshMail\Api\RequestQueueServiceInterface;
 use Virtua\FreshMail\Api\RequestData\Subscriber;
-use Virtua\FreshMail\Api\FullSyncSubscriberServiceInterfaceFactory;
+use Virtua\FreshMail\Api\FullSyncSubscriberServiceInterface;
 
 class RequestQueueProcessor implements RequestQueueProcessorInterface
 {
@@ -42,9 +42,9 @@ class RequestQueueProcessor implements RequestQueueProcessorInterface
     private $subscriberDeleteFactory;
 
     /**
-     * @var FullSyncSubscriberServiceInterfaceFactory
+     * @var FullSyncSubscriberServiceInterface
      */
-    private $fullSyncServiceFactory;
+    private $fullSyncService;
 
     public function __construct(
         FreshMailApiInterfaceFactory $freshMailApiFactory,
@@ -52,14 +52,14 @@ class RequestQueueProcessor implements RequestQueueProcessorInterface
         Subscriber\AddInterfaceFactory $subscriberAddFactory,
         Subscriber\EditInterfaceFactory $subscriberEditFactory,
         Subscriber\DeleteInterfaceFactory $subscriberDeleteFactory,
-        FullSyncSubscriberServiceInterfaceFactory $fullSyncServiceFactory
+        FullSyncSubscriberServiceInterface $fullSyncService
     ) {
         $this->freshMailApiFactory = $freshMailApiFactory;
         $this->requestQueueService = $requestQueueService;
         $this->subscriberAddFactory = $subscriberAddFactory;
         $this->subscriberEditFactory = $subscriberEditFactory;
         $this->subscriberDeleteFactory = $subscriberDeleteFactory;
-        $this->fullSyncServiceFactory = $fullSyncServiceFactory;
+        $this->fullSyncService = $fullSyncService;
     }
 
     public function process(RequestQueueInterface $requestQueue): void
@@ -123,6 +123,6 @@ class RequestQueueProcessor implements RequestQueueProcessorInterface
 
     private function actionFullSync(RequestQueueInterface $requestQueue): void
     {
-        $this->fullSyncServiceFactory->create()->execute();
+        $this->fullSyncService->execute();
     }
 }

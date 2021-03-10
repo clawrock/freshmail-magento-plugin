@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="adminhtml.system.email.template.grid.columnSet">
+            <block class="Magento\Backend\Block\Widget\Grid\Column" name="adminhtml.system.email.template.grid.columnSet.freshmail_template" as="freshmail_template">
+                <arguments>
+                    <argument name="header" xsi:type="string" translate="true">FreshMail Template</argument>
+                    <argument name="index" xsi:type="string">freshmail_id_hash</argument>
+                    <argument name="renderer" xsi:type="string">Virtua\FreshMail\Block\Adminhtml\Template\Grid\Renderer\FreshMail</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

@@ -135,11 +135,9 @@ class RequestQueueRepository implements RequestQueueRepositoryInterface
     public function getList(SearchCriteriaInterface $searchCriteria): RequestQueueSearchResultsInterface
     {
         try {
-            /** @var RequestQueueCollection $collection */
             $collection = $this->collectionFactory->create();
             $this->collectionProcessor->process($searchCriteria, $collection);
 
-            /** @var RequestQueueSearchResultsInterface $searchResults */
             $searchResults = $this->requestQueueSearchResultsFactory->create();
             $searchResults->setItems($collection->getItems());
             $searchResults->setSearchCriteria($searchCriteria);

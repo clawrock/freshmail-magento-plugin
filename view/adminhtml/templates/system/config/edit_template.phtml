@@ -1,0 +1,8 @@
+<?php
+/* @var Virtua\FreshMail\Block\Adminhtml\System\Config\EditTemplate $block */
+?>
+<button class="scalable" type="button" id="<?= /* @noEscape */ $block->getHtmlId() ?>" data-mage-init='{"freshMailEditTemplate":{
+    "url": "<?= $block->escapeUrl($block->getAjaxUrl()) ?>",
+    "elementId": "<?= /* @noEscape */ $block->getHtmlId() ?>"}}'>
+    <span id="<?= /* @noEscape */ $block->getHtmlId() ?>_result"><?= $block->escapeHtml($block->getButtonLabel()) ?></span>
+</button>

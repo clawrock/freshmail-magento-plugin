@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Virtua_FreshMail::report_root"
+             title="FreshMail"
+             translate="title"
+             module="Virtua_FreshMail"
+             sortOrder="45"
+             parent="Magento_Reports::report"
+             resource="Virtua_FreshMail::reportroot" />
+
+        <add id="Virtua_FreshMail::report_abandonedcart"
+            title="Abandoned Cart"
+            module="Virtua_FreshMail"
+            sortOrder="10"
+            parent="Virtua_FreshMail::report_root"
+            action="freshmail/report_freshMail/abandonedCart"
+            resource="Virtua_Freshmail::report_abandonedcart" />
+    </menu>
+</config>

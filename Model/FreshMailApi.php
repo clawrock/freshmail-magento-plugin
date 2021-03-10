@@ -188,6 +188,24 @@ class FreshMailApi implements FreshMailApiInterface
         }
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getTemplateList(RequestData\Templates\ListsInterface $listsData): ResponseInterface
+    {
+        $response = $this->getApiV2()->doRequest(self::API_TEMPLATES_LISTS, $listsData->getDataArray());
+        return $this->responseFactory->create(['response' => $response]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getTemplate(RequestData\Templates\TemplateInterface $templateData): ResponseInterface
+    {
+        $response = $this->getApiV2()->doRequest(self::API_TEMPLATES_TEMPLATE, $templateData->getDataArray());
+        return $this->responseFactory->create(['response' => $response]);
+    }
+
     private function getApiV2(): ApiV2Client
     {
         if (! $this->apiV2) {

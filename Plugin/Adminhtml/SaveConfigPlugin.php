@@ -18,6 +18,7 @@ use Virtua\FreshMail\Model\System\Config as FreshMailConfig;
 use Virtua\FreshMail\Exception\ApiException;
 use Virtua\FreshMail\Api\FreshMailApiInterfaceFactory;
 use Virtua\FreshMail\Api\RequestQueueServiceInterface;
+use Virtua\FreshMail\Model\Cron\ScheduleFreshMailTemplates;
 
 class SaveConfigPlugin
 {
@@ -49,20 +50,22 @@ class SaveConfigPlugin
     private $integrationServiceFactory;
 
     /**
-     * @var IntegrationServiceInterface|null
+     * @var ScheduleFreshMailTemplates
      */
-    private $integrationService;
+    private $templateCronScheduler;
 
     public function __construct(
         FreshMailConfig $config,
         RequestQueueServiceInterface $requestQueueService,
         FreshMailApiInterfaceFactory $freshMailApiFactory,
-        IntegrationServiceInterfaceFactory $integrationServiceFactory
+        IntegrationServiceInterfaceFactory $integrationServiceFactory,
+        ScheduleFreshMailTemplates $templateCronScheduler
     ) {
         $this->config = $config;
         $this->requestQueueService = $requestQueueService;
         $this->freshMailApiFactory = $freshMailApiFactory;
         $this->integrationServiceFactory = $integrationServiceFactory;
+        $this->templateCronScheduler = $templateCronScheduler;
     }
 
     /**
@@ -89,10 +92,11 @@ class SaveConfigPlugin
             if (! $freshMailApi->testConnection()) {
                 throw new ApiException((string) __('Connection failed!'));
             }
-            
+
             $integrationService = $this->getIntegrationService($freshMailApi);
             if ($integrationService->isIntegrationNeeded()) {
                 $integrationService->initIntegration();
+                $this->scheduleEmailTemplateSynchronization();
             }
 
             $this->beforeSaveModuleIsEnabled = $this->config->isEnabled();
@@ -144,5 +148,10 @@ class SaveConfigPlugin
         }
 
         return true;
+    }
+
+    private function scheduleEmailTemplateSynchronization(): void
+    {
+        $this->templateCronScheduler->scheduleGetTemplatesJob();
     }
 }

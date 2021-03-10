@@ -12,5 +12,107 @@
         "constraint": {
             "PRIMARY": true
         }
+    },
+    "email_template": {
+        "column": {
+            "freshmail_id_hash": true,
+            "freshmail_additional_text": true
+        }
+    },
+    "freshmail_abandoned_cart": {
+        "column": {
+            "entity_id": true,
+            "quote_id": true,
+            "cart_total": true,
+            "recovered": true,
+            "abandoned_at": true,
+            "recovered_at": true,
+            "store_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FRESHMAIL_ABANDONED_CART_QUOTE_ID": true,
+            "FRESHMAIL_ABANDONED_CART_QUOTE_ID_QUOTE_ENTITY_ID": true,
+            "FRESHMAIL_ABANDONED_CART_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "freshmail_follow_up_email": {
+        "column": {
+            "entity_id": true,
+            "customer_id": true,
+            "customer_email": true,
+            "template_id": true,
+            "store_id": true,
+            "created_at": true,
+            "scheduled_at": true,
+            "sent": true,
+            "type": true,
+            "connected_entity_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FRESHMAIL_FOLLOW_UP_EMAIL_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID": true,
+            "FRESHMAIL_FOLLOW_UP_EMAIL_TEMPLATE_ID_EMAIL_TEMPLATE_TEMPLATE_ID": true,
+            "FRESHMAIL_FOLLOW_UP_EMAIL_STORE_ID_STORE_STORE_ID": true
+        }
+    },
+    "freshmail_abandoned_cart_aggregated_daily": {
+        "column": {
+            "id": true,
+            "period": true,
+            "store_id": true,
+            "cart_qty": true,
+            "cart_total": true,
+            "cart_recovered_qty": true,
+            "cart_recovered_total": true,
+            "cart_recovered_qty_percent": true,
+            "cart_recovered_total_percent": true
+        },
+        "index": {
+            "FRESHMAIL_ABANDONED_CART_AGGREGATED_DAILY_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FRESHMAIL_ABANDONED_CART_AGGRED_DAILY_STORE_ID_STORE_STORE_ID": true,
+            "FRESHMAIL_ABANDONED_CART_AGGREGATED_DAILY_PERIOD_STORE_ID": true
+        }
+    },
+    "freshmail_abandoned_cart_aggregated_monthly": {
+        "column": {
+            "id": true,
+            "period": true,
+            "store_id": true,
+            "cart_qty": true,
+            "cart_total": true,
+            "cart_recovered_qty": true,
+            "cart_recovered_total": true
+        },
+        "index": {
+            "FRESHMAIL_ABANDONED_CART_AGGREGATED_MONTHLY_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FRESHMAIL_ABANDONED_CART_AGGRED_MONTHLY_STORE_ID_STORE_STORE_ID": true,
+            "FRESHMAIL_ABANDONED_CART_AGGREGATED_MONTHLY_PERIOD_STORE_ID": true
+        }
+    },
+    "freshmail_abandoned_cart_aggregated_yearly": {
+        "column": {
+            "id": true,
+            "period": true,
+            "store_id": true,
+            "cart_qty": true,
+            "cart_total": true,
+            "cart_recovered_qty": true,
+            "cart_recovered_total": true
+        },
+        "index": {
+            "FRESHMAIL_ABANDONED_CART_AGGREGATED_YEARLY_STORE_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FRESHMAIL_ABANDONED_CART_AGGRED_YEARLY_STORE_ID_STORE_STORE_ID": true,
+            "FRESHMAIL_ABANDONED_CART_AGGREGATED_YEARLY_PERIOD_STORE_ID": true
+        }
     }
 }

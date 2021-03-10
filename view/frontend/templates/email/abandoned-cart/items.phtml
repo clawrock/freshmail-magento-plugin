@@ -1,0 +1,13 @@
+<?php
+/** @var $block \Virtua\FreshMail\Block\Email\AbandonedCart\Items */
+?>
+
+<?php $items = $block->getQuoteItems(); ?>
+<?php if ($items): ?>
+    <?php foreach ($items as $item) : ?>
+        <?php if (!$item->getParentItem()) : ?>
+            <?= $block->getItemHtml($item) ?>
+        <?php endif; ?>
+    <?php endforeach; ?>
+<?php endif; ?>
+

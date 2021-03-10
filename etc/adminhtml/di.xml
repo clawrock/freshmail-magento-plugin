@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Config\Model\Config">
+        <plugin name="Virtua_FreshMail_before_save_admin_section_config" type="Virtua\FreshMail\Plugin\Adminhtml\SaveConfigPlugin"/>
+    </type>
+    <type name="Magento\Email\Block\Adminhtml\Template">
+        <plugin name="Virtua_FreshMail_transactional_email_templates" type="Virtua\FreshMail\Plugin\Adminhtml\Email\TemplateBlockPlugin" />
+    </type>
+
+    <type name="Magento\Reports\Model\ResourceModel\Refresh\Collection">
+        <plugin name="Vitua_FreshMail_report_abandonedcart"
+                type="Virtua\FreshMail\Plugin\Magento\Reports\Model\ResourceModel\Refresh\Collection"
+                sortOrder="1" />
+    </type>
+
+    <type name="Magento\Reports\Controller\Adminhtml\Report\Statistics">
+        <arguments>
+            <argument name="reportTypes" xsi:type="array">
+                <item name="abandoned_carts" xsi:type="string">Virtua\FreshMail\Model\ResourceModel\Report\AbandonedCart</item>
+            </argument>
+        </arguments>
+    </type>
+    <preference for="Magento\Email\Block\Adminhtml\Template\Edit\Form"
+                type="Virtua\FreshMail\Rewrite\Block\Email\Adminhtml\Template\Edit\Form"/>
+</config>
+

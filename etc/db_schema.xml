@@ -14,4 +14,143 @@
             <column name="entity_id" />
         </constraint>
     </table>
+
+    <table name="email_template">
+        <column xsi:type="varchar" name="freshmail_id_hash" nullable="true" comment="FreshMail Template Hash Id" />
+        <column xsi:type="text" name="freshmail_additional_text" nullable="true" comment="FreshMail Additional Text" />
+    </table>
+    <table name="freshmail_abandoned_cart" resource="default" engine="innodb" comment="Freshmail Abandoned Cart">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID" />
+        <column xsi:type="int" name="quote_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Quote ID" />
+        <column xsi:type="decimal" name="cart_total" scale="4" precision="12" unsigned="true" nullable="false"
+                default="0" comment="Cart Total"/>
+        <column xsi:type="smallint" name="recovered" padding="2" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Cart Recovered" />
+        <column xsi:type="timestamp" name="abandoned_at" on_update="false" nullable="false"
+                default="CURRENT_TIMESTAMP" comment="Abandoned At" />
+        <column xsi:type="timestamp" name="recovered_at" on_update="false" nullable="true"
+                default="null" comment="Recovered At" />
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Store ID" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id" />
+        </constraint>
+        <constraint xsi:type="unique" referenceId="FRESHMAIL_ABANDONED_CART_QUOTE_ID_">
+            <column name="quote_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FRESHMAIL_ABANDONED_CART_QUOTE_ID_QUOTE_ENTITY_ID" table="freshmail_abandoned_cart"
+                    column="quote_id" referenceTable="quote" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FRESHMAIL_ABANDONED_CART_STORE_ID_STORE_STORE_ID" table="freshmail_abandoned_cart"
+                    column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+    </table>
+    <table name="freshmail_follow_up_email" resource="default" engine="innodb" comment="Freshmail Follow Up Email">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID" />
+        <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Customer ID" />
+        <column xsi:type="varchar" name="customer_email" nullable="false" length="255" comment="Customer Email"/>
+        <column xsi:type="int" name="template_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Template ID" />
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Store ID" />
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At" />
+        <column xsi:type="timestamp" name="scheduled_at" on_update="false" nullable="true" default="NULL" comment="Scheduled At" />
+        <column xsi:type="smallint" name="sent" padding="2" unsigned="true" nullable="false" identity="false" default="0" comment="Status" />
+        <column xsi:type="varchar" name="type" nullable="false" length="255" comment="Email Type"/>
+        <column xsi:type="int" name="connected_entity_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Connected Entity ID" />
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id" />
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FRESHMAIL_FOLLOW_UP_EMAIL_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID" table="freshmail_follow_up_email"
+                    column="customer_id" referenceTable="customer_entity" referenceColumn="entity_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FRESHMAIL_FOLLOW_UP_EMAIL_TEMPLATE_ID_EMAIL_TEMPLATE_TEMPLATE_ID" table="freshmail_follow_up_email"
+                    column="template_id" referenceTable="email_template" referenceColumn="template_id" onDelete="CASCADE" />
+        <constraint xsi:type="foreign" referenceId="FRESHMAIL_FOLLOW_UP_EMAIL_STORE_ID_STORE_STORE_ID" table="freshmail_follow_up_email"
+                    column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE" />
+    </table>
+
+    <table name="freshmail_abandoned_cart_aggregated_daily" resource="sales" engine="innodb"
+           comment="Abandoned Carts Aggregated Daily">
+        <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="date" name="period" comment="Period"/>
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="true" identity="false"
+                comment="Store ID"/>
+        <column xsi:type="int" name="cart_qty" padding="10" unsigned="true" nullable="false" default="0" identity="false"
+                comment="Cart Qty"/>
+        <column xsi:type="decimal" name="cart_total" scale="4" precision="12" unsigned="true" nullable="false"
+                default="0" comment="Cart Total"/>
+        <column xsi:type="int" name="cart_recovered_qty" padding="10" unsigned="true" nullable="false" default="0" identity="false"
+                comment="Cart Recovered Qty"/>
+        <column xsi:type="decimal" name="cart_recovered_total" scale="4" precision="12" unsigned="true" nullable="false"
+                default="0" comment="Cart Recovered Total"/>
+        <column xsi:type="decimal" name="cart_recovered_qty_percent" scale="4" precision="12" unsigned="true" nullable="false"
+                default="0" comment="Cart Recovered Qty Percent"/>
+        <column xsi:type="decimal" name="cart_recovered_total_percent" scale="4" precision="12" unsigned="true" nullable="false"
+                default="0" comment="Cart Recovered Total Percent"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FRESHMAIL_ABANDONED_CART_AGGREGATED_DAILY_STORE_ID_STORE_STORE_ID"
+                    table="freshmail_abandoned_cart_aggregated_daily" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="FRESHMAIL_ABANDONED_CART_AGGREGATED_DAILY_PERIOD_STORE_ID">
+            <column name="period"/>
+            <column name="store_id"/>
+        </constraint>
+        <index referenceId="FRESHMAIL_ABANDONED_CART_AGGREGATED_DAILY_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+    </table>
+    <table name="freshmail_abandoned_cart_aggregated_monthly" resource="sales" engine="innodb"
+           comment="Abandoned Carts Aggregated Monthly">
+        <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="date" name="period" comment="Period"/>
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="true" identity="false"
+                comment="Store ID"/>
+        <column xsi:type="int" name="cart_qty" padding="10" unsigned="true" nullable="false" default="0" identity="false"
+                comment="Cart Qty"/>
+        <column xsi:type="decimal" name="cart_total" scale="4" precision="12" unsigned="true" nullable="false"
+                default="0" comment="Cart Total"/>
+        <column xsi:type="int" name="cart_recovered_qty" padding="10" unsigned="true" nullable="false" default="0" identity="false"
+                comment="Cart Recovered Qty"/>
+        <column xsi:type="decimal" name="cart_recovered_total" scale="4" precision="12" unsigned="true" nullable="false"
+                default="0" comment="Cart Recovered Total"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FRESHMAIL_ABANDONED_CART_AGGREGATED_MONTHLY_STORE_ID_STORE_STORE_ID"
+                    table="freshmail_abandoned_cart_aggregated_monthly" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="FRESHMAIL_ABANDONED_CART_AGGREGATED_MONTHLY_PERIOD_STORE_ID">
+            <column name="period"/>
+            <column name="store_id"/>
+        </constraint>
+        <index referenceId="FRESHMAIL_ABANDONED_CART_AGGREGATED_MONTHLY_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+    </table>
+    <table name="freshmail_abandoned_cart_aggregated_yearly" resource="sales" engine="innodb"
+           comment="Abandoned Carts Aggregated Yearly">
+        <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="date" name="period" comment="Period"/>
+        <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="true" identity="false"
+                comment="Store ID"/>
+        <column xsi:type="int" name="cart_qty" padding="10" unsigned="true" nullable="false" default="0" identity="false"
+                comment="Cart Qty"/>
+        <column xsi:type="decimal" name="cart_total" scale="4" precision="12" unsigned="true" nullable="false"
+                default="0" comment="Cart Total"/>
+        <column xsi:type="int" name="cart_recovered_qty" padding="10" unsigned="true" nullable="false" default="0" identity="false"
+                comment="Cart Recovered Qty"/>
+        <column xsi:type="decimal" name="cart_recovered_total" scale="4" precision="12" unsigned="true" nullable="false"
+                default="0" comment="Cart Recovered Total"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FRESHMAIL_ABANDONED_CART_AGGREGATED_YEARLY_STORE_ID_STORE_STORE_ID"
+                    table="freshmail_abandoned_cart_aggregated_yearly" column="store_id" referenceTable="store"
+                    referenceColumn="store_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="FRESHMAIL_ABANDONED_CART_AGGREGATED_YEARLY_PERIOD_STORE_ID">
+            <column name="period"/>
+            <column name="store_id"/>
+        </constraint>
+        <index referenceId="FRESHMAIL_ABANDONED_CART_AGGREGATED_YEARLY_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+    </table>
 </schema>

@@ -40,3 +40,16 @@ Freshmail,Freshmail
 Yes,Yes
 No,No
 "Save Config","Save Config"
+"First Email","First Email"
+"Second Email","Second Email"
+"Third Email","Third Email"
+"Send After","Send After"
+"Day","Day"
+"Days","Days"
+"Please Select","Please Select"
+"Synchronize templates with FreshMail","Synchronize templates with FreshMail"
+"Synchronize job added to queue. The templates will be synchronized within 2 minutes.","Synchronize job added to queue. The templates will be synchronized within 2 minutes."
+"Edit template in FreshMail","Edit template in FreshMail"
+"Field template id should not be empty.","Field template id should not be empty."
+"There is no such template in the database.","There is no such template in the database."
+"Template will open in FreshMail editor. After making changes and saving template in FreshMail, go to Magento and click on 'Synchronize templates' to see the changes.","Template will open in FreshMail editor. After making changes and saving template in FreshMail, go to Magento and click on 'Synchronize templates' to see the changes."

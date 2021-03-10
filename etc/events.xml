@@ -7,4 +7,8 @@
     <event name="newsletter_subscriber_save_after">
         <observer name="freshMailSubscriberAfter" instance="Virtua\FreshMail\Observer\Newsletter\Subscriber\SaveAfterObserver" />
     </event>
+    <event name="sales_order_place_after">
+        <observer name="freshMailPlaceOrderAfter" instance="Virtua\FreshMail\Observer\Sales\OrderPlaceAfter"/>
+    </event>
 </config>
+

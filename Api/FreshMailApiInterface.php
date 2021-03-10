@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Virtua\FreshMail\Api;
 
+use \Exception;
 use FreshMail\Api\Client\Exception\ClientException;
 use FreshMail\Api\Client\Exception\RequestException;
 use FreshMail\Api\Client\Response\HttpResponse;
@@ -33,6 +34,9 @@ interface FreshMailApiInterface
 
     public const API_INTEGRATIONS = 'integrations';
 
+    public const API_TEMPLATES_LISTS = 'templates/lists';
+    public const API_TEMPLATES_TEMPLATE = 'templates/template';
+
     public function getLists(): array;
 
     public function addSubscriber(RequestData\Subscriber\AddInterface $subscriberAdd): void;
@@ -60,4 +64,14 @@ interface FreshMailApiInterface
      * @throws ApiException
      */
     public function integrations(RequestData\IntegrationsInterface $integrationData): void;
+
+    /**
+     * @throws Exception
+     */
+    public function getTemplateList(RequestData\Templates\ListsInterface $listsData): ResponseInterface;
+
+    /**
+     * @throws Exception
+     */
+    public function getTemplate(RequestData\Templates\TemplateInterface $template): ResponseInterface;
 }

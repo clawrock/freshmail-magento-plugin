@@ -1,12 +1,22 @@
 <?xml version="1.0"?>
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Virtua\FreshMail\Api\Data\AbandonedCartInterface"
+                type="Virtua\FreshMail\Model\AbandonedCart" />
     <preference for="Virtua\FreshMail\Api\Data\SubscriberSearchResultsInterface"
                 type="Virtua\FreshMail\Model\SubscriberSearchResults" />
     <preference for="Virtua\FreshMail\Api\Data\RequestQueueInterface"
                 type="Virtua\FreshMail\Model\RequestQueue" />
     <preference for="Virtua\FreshMail\Api\Data\RequestQueueSearchResultsInterface"
                 type="Virtua\FreshMail\Model\RequestQueueSearchResults" />
+    <preference for="Virtua\FreshMail\Api\Data\FollowUpEmailInterface"
+                type="Virtua\FreshMail\Model\FollowUpEmail" />
+    <preference for="Virtua\FreshMail\Api\Data\FollowUpEmailSearchResultsInterface"
+                type="Virtua\FreshMail\Model\FollowUpEmailSearchResults" />
+    <preference for="Virtua\FreshMail\Api\Data\AbandonedCartSearchResultsInterface"
+                type="Virtua\FreshMail\Model\AbandonedCartSearchResults" />
+    <preference for="Virtua\FreshMail\Api\AbandonedCartServiceInterface"
+                type="Virtua\FreshMail\Model\AbandonedCartService" />
     <preference for="Virtua\FreshMail\Api\FullSyncSubscriberServiceInterface"
                 type="Virtua\FreshMail\Model\FullSyncSubscriberService" />
     <preference for="Virtua\FreshMail\Api\IntegrationServiceInterface"
@@ -21,6 +31,12 @@
                 type="Virtua\FreshMail\Model\RequestQueueService" />
     <preference for="Virtua\FreshMail\Api\RequestQueueRepositoryInterface"
                 type="Virtua\FreshMail\Model\RequestQueueRepository" />
+    <preference for="Virtua\FreshMail\Api\FollowUpEmailRepositoryInterface"
+                type="Virtua\FreshMail\Model\FollowUpEmailRepository" />
+    <preference for="Virtua\FreshMail\Api\FollowUpEmailServiceInterface"
+                type="Virtua\FreshMail\Model\FollowUpEmailService" />
+    <preference for="Virtua\FreshMail\Api\AbandonedCartRepositoryInterface"
+                type="Virtua\FreshMail\Model\AbandonedCartRepository" />
     <preference for="Virtua\FreshMail\Api\SubscriberServiceInterface"
                 type="Virtua\FreshMail\Model\SubscriberService" />
     <preference for="Virtua\FreshMail\Api\SubscriberListServiceInterface"
@@ -33,8 +49,16 @@
                 type="Virtua\FreshMail\Model\RequestQueueProcessor"/>
     <preference for="Virtua\FreshMail\Api\FreshMailStatusServiceInterface"
                 type="Virtua\FreshMail\Model\FreshMail\StatusService"/>
+    <preference for="Virtua\FreshMail\Api\TemplateRepositoryInterface"
+                type="Virtua\FreshMail\Model\TemplateRepository" />
+    <preference for="Virtua\FreshMail\Api\TemplateServiceInterface"
+                type="Virtua\FreshMail\Model\TemplateService" />
+    <preference for="Virtua\FreshMail\Api\Email\SenderFactoryInterface"
+                type="Virtua\FreshMail\Model\Email\SenderFactory" />
     <preference for="Virtua\FreshMail\Api\ResponseData\ResponseInterface"
                 type="Virtua\FreshMail\Model\FreshMail\Response"/>
+    <preference for="Virtua\FreshMail\Api\ResponseData\Templates\TemplateInterface"
+                type="Virtua\FreshMail\Model\FreshMail\ResponseData\Templates\Template"/>
     <preference for="Virtua\FreshMail\Api\RequestData\IntegrationsInterface"
                 type="Virtua\FreshMail\Model\FreshMail\RequestData\Integrations" />
     <preference for="Virtua\FreshMail\Api\RequestData\Subscriber\AddInterface"
@@ -65,13 +89,13 @@
         </arguments>
     </virtualType>
     <!-- end todo -->
+    <preference for="Virtua\FreshMail\Api\RequestData\Templates\ListsInterface"
+                type="Virtua\FreshMail\Model\FreshMail\RequestData\Templates\Lists"/>
+    <preference for="Virtua\FreshMail\Api\RequestData\Templates\TemplateInterface"
+                type="Virtua\FreshMail\Model\FreshMail\RequestData\Templates\Template"/>
 
     <type name="Magento\Framework\Mail\TransportInterface">
         <plugin name="freshmail_mail_transport" type="Virtua\FreshMail\Plugin\Mail\TransportPlugin" sortOrder="1" disabled="false"/>
-    </type>
-
-    <type name="Magento\Config\Model\Config">
-        <plugin name="Virtua_FreshMail_before_save_admin_section_config" type="Virtua\FreshMail\Plugin\Adminhtml\SaveConfigPlugin"/>
     </type>
 
     <type name="Magento\Framework\Module\Status">
@@ -91,4 +115,12 @@
             </argument>
         </arguments>
     </type>
+    <!-- temp for tests -->
+    <!--<type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="generate_report" xsi:type="object">Virtua\FreshMail\Console\Command\GenerateReportCommand</item>
+            </argument>
+        </arguments>
+    </type>-->
 </config>

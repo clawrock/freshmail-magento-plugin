@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" label="Email Order Items List" design_abstraction="custom">
+
+    <body>
+        <block class="Virtua\FreshMail\Block\Email\AbandonedCart\Items" template="Virtua_FreshMail::email/abandoned-cart/items.phtml" cacheable="false">
+            <block class="Magento\Framework\View\Element\RendererList" name="freshmail.email.abandoned-cart.renderers" as="renderer.list">
+                <block class="Virtua\FreshMail\Block\Email\AbandonedCart\Items\Renderer\DefaultRenderer"
+                       name="freshmail.email.abandoned-cart.renderers.default" as="default"
+                       template="Virtua_FreshMail::email/abandoned-cart/items/default.phtml"/>
+            </block>
+        </block>
+    </body>
+</page>
