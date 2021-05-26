@@ -43,10 +43,9 @@ define([
                 data: {template_id: templateId},
                 headers: this.options.headers || {}
             }).done(function (response) {
-                console.log(response);
+
                 if(response.success === true) {
                     if(response.new_window === true) {
-                        console.log(response.url);
                         window.open(response.url, '_blank');
                     } else {
                         window.location.replace(response.url);

@@ -13,7 +13,7 @@
             <schedule>0 5 * * *</schedule>
         </job>
         <job name="freshmail_follow_up_email" instance="Virtua\FreshMail\Cron\FollowUpEmail" method="execute">
-            <schedule>*/10 * * * *</schedule>
+            <schedule>*/5 * * * *</schedule>
         </job>
         <job name="freshmail_follow_up_email_abandoned_cart" instance="Virtua\FreshMail\Cron\FollowUpEmail\AbandonedCart" method="execute">
             <schedule>20 5 * * *</schedule>

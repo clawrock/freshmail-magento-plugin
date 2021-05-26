@@ -31,7 +31,7 @@
                     <frontend_model>Virtua\FreshMail\Block\Adminhtml\System\Config\TestConnection</frontend_model>
                 </field>
             </group>
-            <group id="transactional_emails" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="transactional_emails" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Transaction Emails</label>
                 <field id="enable_api_send" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Send transactional emails by FreshMail servers</label>
@@ -46,7 +46,7 @@
                     <source_model>Virtua\FreshMail\Block\Adminhtml\System\Config\Form\Field\Lists\Source\ListData</source_model>
                 </field>
             </group>
-            <group id="debug" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+            <group id="debug" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Debug Mode</label>
                 <field id="debug" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Enable debug mode in order to help programmers find and resolve issues related with FreshMail module</label>
@@ -155,6 +155,15 @@
                     <comment>Template will open in FreshMail editor. After making changes and saving template in FreshMail, go to Magento and click on 'Synchronize templates' to see the changes.</comment>
                     <depends>
                         <field id="third_email_enabled">1</field>
+                    </depends>
+                </field>
+                <field id="force_follow_up_emails" translate="label,button_label" sortOrder="640" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Gather all abandoned carts from today and schedule emails immediately</label>
+                    <comment>The emails will use first email abandoned cart template</comment>
+                    <button_label>Send</button_label>
+                    <frontend_model>Virtua\FreshMail\Block\Adminhtml\System\Config\ForceFollowUpEmails</frontend_model>
+                    <depends>
+                        <field id="first_email_enabled">1</field>
                     </depends>
                 </field>
             </group>

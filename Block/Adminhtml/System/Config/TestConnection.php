@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Virtua\FreshMail\Block\Adminhtml\System\Config;

@@ -8,6 +8,7 @@
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
                             <resource id="Virtua_FreshMail::config_freshmail" title="Freshmail Configuration" translate="title" sortOrder="50"/>
+                            <resource id="Virtua_FreshMail::config_freshmail_fllow_up_email" title="Freshmail Follow Up Email" translate="title" sortOrder="60"/>
                         </resource>
                     </resource>
                 </resource>

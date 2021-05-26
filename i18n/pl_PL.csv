@@ -53,3 +53,8 @@ No,Nie
 "Field template id should not be empty.","pole template id nie może być puste."
 "There is no such template in the database.","Nie ma takiego szablonu w bazie danych."
 "Template will open in FreshMail editor. After making changes and saving template in FreshMail, go to Magento and click on 'Synchronize templates' to see the changes.","Szablon otworzy się w edytorze FreshMail. Po dokonaniu zmian i zapisaniu szablonu we FreshMailu przejdź do Magento i kliknij przycisk 'Synchronizuj szablony' aby zobaczyć dokonane zmiany."
+"Gather all abandoned carts from today and schedule emails immediately","Pozbieraj wszystkie porzucone koszyki z dzisiaj i wrzuć maile do kolejki"
+"Send","Wyślij"
+"Emails added to queue.","Emaile dodane do kolejki."
+"Something went wrong, please try again later.","Coś poszło nie tak, spróbuj ponownie później."
+"The emails will use first email abandoned cart template","Emaile będą korzystać z szablonu 'pierwszego emaila'"

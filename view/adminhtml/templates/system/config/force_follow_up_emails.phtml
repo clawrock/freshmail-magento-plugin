@@ -1,0 +1,10 @@
+<?php
+/* @var Virtua\FreshMail\Block\Adminhtml\System\Config\EditTemplate $block */
+?>
+<button class="scalable" type="button" id="<?= /* @noEscape */ $block->getHtmlId() ?>" data-mage-init='{"forceFollowUpEmails":{
+    "url": "<?= $block->escapeUrl($block->getAjaxUrl()) ?>",
+    "successText": "<?= $block->escapeHtmlAttr(__('Emails added to queue.')) ?>",
+    "failedText": "<?= $block->escapeHtmlAttr(__('Something went wrong, please try again later.')) ?>",
+    "elementId": "<?= /* @noEscape */ $block->getHtmlId() ?>"}}'>
+    <span id="<?= /* @noEscape */ $block->getHtmlId() ?>_result"><?= $block->escapeHtml($block->getButtonLabel()) ?></span>
+</button>

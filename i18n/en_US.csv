@@ -53,3 +53,8 @@ No,No
 "Field template id should not be empty.","Field template id should not be empty."
 "There is no such template in the database.","There is no such template in the database."
 "Template will open in FreshMail editor. After making changes and saving template in FreshMail, go to Magento and click on 'Synchronize templates' to see the changes.","Template will open in FreshMail editor. After making changes and saving template in FreshMail, go to Magento and click on 'Synchronize templates' to see the changes."
+"Gather all abandoned carts from today and schedule emails immediately","Gather all abandoned carts from today and schedule emails immediately"
+"Send","Send"
+"Emails added to queue.","Emails added to queue."
+"Something went wrong, please try again later.","Something went wrong, please try again later."
+"The emails will use first email abandoned cart template","The emails will use first email abandoned cart template"
