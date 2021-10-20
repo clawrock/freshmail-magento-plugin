@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Virtua\FreshMail\Model;
 
+use Virtua\FreshMail\Model\GetBearerTokenForListHash;
 use Virtua\FreshMail\Api\SubscriberListServiceInterface;
 use Virtua\FreshMail\Logger\Logger;
 use Virtua\FreshMail\Api\FreshMailApiInterface;
@@ -11,44 +12,34 @@ use Virtua\FreshMail\Api\FreshMailApiInterfaceFactory;
 
 class SubscriberListService implements SubscriberListServiceInterface
 {
-    /**
-     * @var FreshMailApiInterfaceFactory
-     */
+    /** @var FreshMailApiInterfaceFactory */
     private $freshMailApiFactory;
-
-    /**
-     * @var FreshMailApiInterface
-     */
+    /** @var FreshMailApiInterface|null */
     private $freshMailApi;
-
-    /**
-     * @var Logger
-     */
+    /** @var Logger */
     protected $logger;
+    /** @var GetBearerTokenForListHash */
+    private $getBearerTokenForListHash;
 
     public function __construct(
         FreshMailApiInterfaceFactory $freshMailApiFactory,
-        FreshMailApiInterface $freshMailApi,
-        Logger $logger
+        Logger $logger,
+        GetBearerTokenForListHash $getBearerTokenForListHash
     ) {
         $this->freshMailApiFactory = $freshMailApiFactory;
         $this->logger = $logger;
+        $this->getBearerTokenForListHash = $getBearerTokenForListHash;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getLists(): array
+    public function getLists(?string $token = null): array
     {
-        return $this->getFreshMailApi()->getLists();
+        return $this->getFreshMailApi($token)->getLists();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hashListExists(string $hashList): bool
     {
-        $lists = $this->getFreshMailApi()->getLists();
+        $token = $this->getBearerTokenForListHash->execute($hashList);
+        $lists = $this->getLists($token ?: null);
         foreach ($lists as $list) {
             if ($list['subscriberListHash'] === $hashList) {
                 return true;
@@ -58,10 +49,10 @@ class SubscriberListService implements SubscriberListServiceInterface
         return false;
     }
 
-    private function getFreshMailApi(): FreshMailApiInterface
+    private function getFreshMailApi(?string $token = null): FreshMailApiInterface
     {
         if (! $this->freshMailApi) {
-            $this->freshMailApi = $this->freshMailApiFactory->create();
+            $this->freshMailApi = $this->freshMailApiFactory->create($token);
         }
 
         return $this->freshMailApi;

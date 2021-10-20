@@ -4,33 +4,25 @@ declare(strict_types=1);
 
 namespace Virtua\FreshMail\Model;
 
-use Exception;
-use FreshMail\Api\Client\Exception\RequestException;
-use FreshMail\Api\Client\Exception\ServerException;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Newsletter\Model\Subscriber as MagentoSubscriber;
-use Virtua\FreshMail\Api\FreshMailApiInterfaceFactory;
 use Virtua\FreshMail\Api\FreshMailApiInterface;
+use Virtua\FreshMail\Api\FreshMailApiInterfaceFactory;
+use Virtua\FreshMail\Api\FreshMailStatusServiceInterface;
 use Virtua\FreshMail\Api\FullSyncSubscriberServiceInterface;
-use Virtua\FreshMail\Api\SubscriberRepositoryInterface;
+use Virtua\FreshMail\Api\RequestData\Subscriber;
 use Virtua\FreshMail\Api\SubscriberListServiceInterface;
+use Virtua\FreshMail\Api\SubscriberRepositoryInterface;
+use Virtua\FreshMail\Exception\ApiException;
 use Virtua\FreshMail\Logger\Logger;
 use Virtua\FreshMail\Model\System\Config;
-use Virtua\FreshMail\Exception\ApiException;
-use Virtua\FreshMail\Api\FreshMailStatusServiceInterface;
-use Virtua\FreshMail\Api\RequestData\Subscriber;
 
+/** @SuppressWarnings(PHPMD.CouplingBetweenObjects) */
 class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
 {
     /**
      * @var SubscriberRepositoryInterface
      */
     private $subscriberRepository;
-
-    /**
-     * @var FreshMailApiInterfaceFactory
-     */
-    private $freshMailApiFactory;
 
     /**
      * @var FreshMailApiInterface
@@ -83,12 +75,7 @@ class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
     private $subscribersToEdit = [];
 
     /**
-     * @var int
-     */
-    private $skippedNoNeedToUpdate = 0;
-
-    /**
-     * @var MagentoSubscriber[]
+     * @var \Magento\Newsletter\Model\Subscriber[]
      */
     private $subscriberDataByEmail = [];
 
@@ -109,7 +96,6 @@ class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
         Logger $logger
     ) {
         $this->subscriberRepository = $subscriberRepository;
-        $this->freshMailApiFactory = $freshMailApiFactory; // todo this is probably not needed
         $this->freshMailApi = $freshMailApiFactory->create();
         $this->subscriberListService = $subscriberListService;
         $this->statusService = $statusService;
@@ -130,8 +116,8 @@ class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
         foreach ($subscriberLists as $storeId => $subscriberData) {
             try {
                 $this->syncSubscribersFromStore($subscriberData, $storeId);
-            } catch (LocalizedException $e) {
-                $this->logger->error($e->getMessage());
+            } catch (\Throwable $e) {
+                $this->logger->error($e->getMessage(), ['exception' => $e]);
                 $this->errors++;
             }
         }
@@ -144,8 +130,8 @@ class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
     /**
      * @throws ApiException
      * @throws LocalizedException
-     * @throws RequestException
-     * @throws ServerException
+     * @throws \FreshMail\Api\Client\Exception\RequestException
+     * @throws \FreshMail\Api\Client\Exception\ServerException
      */
     private function checkIfListExists(string $listHash, int $storeId): bool
     {
@@ -160,7 +146,7 @@ class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
     /**
      * @throws ApiException
      * @throws LocalizedException
-     * @throws Exception
+     * @throws \Exception
      */
     private function syncSubscribersFromStore(array $subscribers, ?int $storeId = null): void
     {
@@ -175,7 +161,7 @@ class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
         /** @var Subscriber\GetMultipleInterface $requestDataGetMultiple */
         $requestDataGetMultiple = $this->subscriberGetMultipleFactory->create(['list' => $listHash]);
 
-        /** @var MagentoSubscriber $subscriber */
+        /** @var \Magento\Newsletter\Model\Subscriber $subscriber */
         foreach ($subscribers as $subscriber) {
             $index++;
             $subscriberEmail = mb_strtolower($subscriber->getSubscriberEmail());
@@ -203,12 +189,12 @@ class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
 
     /**
      * @throws ApiException
-     * @throws RequestException
-     * @throws ServerException
+     * @throws \FreshMail\Api\Client\Exception\RequestException
+     * @throws \FreshMail\Api\Client\Exception\ServerException
      */
     private function checkSubscribersAndAssignToAction(Subscriber\GetMultipleInterface $requestData): void
     {
-        try{
+        try {
             $response = $this->freshMailApi->getMultipleSubscribers($requestData);
             $subscribersToAddCheck = $response->getDataErrors() ?? [];
             $subscribersToEditCheck = $response->getData() ?? [];
@@ -220,7 +206,7 @@ class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
                 throw $e;
             }
         }
-        
+
         $this->addToEdit($subscribersToEditCheck);
         $this->addToAdd($subscribersToAddCheck);
     }
@@ -282,15 +268,6 @@ class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
                 $currentFreshMailStatus = $this->statusService->getFreshMailStatusBySubscriberStatus(
                     $magentoSubscriberStatus
                 );
-
-                $state = (int) $requestResult['state'];
-
-                // check if need to be updated as there are not any custom fields
-                if ($state === (int) $currentFreshMailStatus) {
-                    $this->skippedNoNeedToUpdate++;
-                    continue;
-                }
-
                 $this->subscribersToEdit[$currentFreshMailStatus][] = [
                     'email' => $email,
                 ];
@@ -302,8 +279,8 @@ class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
 
     /**
      * @throws ApiException
-     * @throws RequestException
-     * @throws ServerException
+     * @throws \FreshMail\Api\Client\Exception\RequestException
+     * @throws \FreshMail\Api\Client\Exception\ServerException
      */
     private function addSubscribersToFreshMail(string $hashList): void
     {
@@ -323,7 +300,7 @@ class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
                     $this->freshMailApi->addMultipleSubscribers($addMultiple);
                 } catch (ApiException $exception) {
                     $this->errors++;
-                    $this->logger->error($exception);
+                    $this->logger->error($exception->getMessage());
                 }
             }
         }
@@ -331,8 +308,8 @@ class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
 
     /**
      * @throws ApiException
-     * @throws RequestException
-     * @throws ServerException
+     * @throws \FreshMail\Api\Client\Exception\RequestException
+     * @throws \FreshMail\Api\Client\Exception\ServerException
      */
     private function editSubscribersToFreshMail(string $hashList): void
     {
@@ -348,7 +325,7 @@ class FullSyncSubscriberService implements FullSyncSubscriberServiceInterface
                     $this->freshMailApi->editMultipleSubscribers($editMultiple);
                 } catch (ApiException $exception) {
                     $this->errors++;
-                    $this->logger->error($exception);
+                    $this->logger->error($exception->getMessage());
                 }
             }
         }

@@ -91,4 +91,13 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\Customer\Api\CustomerRepositoryInterface">
+        <plugin name="Virtua_FreshMail::update_subscription_entry_after_customer_save"
+                type="Virtua\FreshMail\Plugin\UpdateSubscriptionEntryAfterCustomerSave" sortOrder="10"/>
+        <plugin name="update_newsletter_subscription_on_customer_update"
+                type="Magento\Newsletter\Model\Plugin\CustomerPlugin" sortOrder="20"/>
+    </type>
+    <type name="Virtua\FreshMail\Api\RequestDataInterface">
+        <plugin name="ClawRock_FreshMail::add_subscriber_custom_fields" type="Virtua\FreshMail\Plugin\AddSubscriberCustomFields"/>
+    </type>
 </config>

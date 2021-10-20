@@ -7,6 +7,7 @@ namespace Virtua\FreshMail\Plugin\Adminhtml;
 use FreshMail\Api\Client\Exception\ClientException;
 use FreshMail\Api\Client\Exception\RequestException;
 use Magento\Config\Model\Config;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -49,20 +50,22 @@ class SaveConfigPlugin
     private $integrationServiceFactory;
 
     /**
-     * @var IntegrationServiceInterface|null
+     * @var ScopeConfigInterface
      */
-    private $integrationService;
+    private $scopeConfig;
 
     public function __construct(
         FreshMailConfig $config,
         RequestQueueServiceInterface $requestQueueService,
         FreshMailApiInterfaceFactory $freshMailApiFactory,
-        IntegrationServiceInterfaceFactory $integrationServiceFactory
+        IntegrationServiceInterfaceFactory $integrationServiceFactory,
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->config = $config;
         $this->requestQueueService = $requestQueueService;
         $this->freshMailApiFactory = $freshMailApiFactory;
         $this->integrationServiceFactory = $integrationServiceFactory;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -74,6 +77,12 @@ class SaveConfigPlugin
      */
     public function beforeSave(Config $subject): void
     {
+        $sectionData = $subject->getData();
+        if (!isset($sectionData['groups']['connection']['fields']['enabled']['value'])) {
+            $enabled = $this->scopeConfig->isSetFlag('freshmail/connection/enabled');
+            $sectionData['groups']['connection']['fields']['enabled']['value'] = $enabled;
+            $subject->setData($sectionData);
+        }
         $sectionId = $subject->getSection();
         if (self::SECTION_NAME === $sectionId) {
             $sectionData = $subject->getData();
@@ -89,7 +98,7 @@ class SaveConfigPlugin
             if (! $freshMailApi->testConnection()) {
                 throw new ApiException((string) __('Connection failed!'));
             }
-            
+
             $integrationService = $this->getIntegrationService($freshMailApi);
             if ($integrationService->isIntegrationNeeded()) {
                 $integrationService->initIntegration();

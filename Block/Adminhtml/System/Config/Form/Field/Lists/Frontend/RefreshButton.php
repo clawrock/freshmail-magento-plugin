@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Virtua\FreshMail\Block\Adminhtml\System\Config\Form\Field\Lists\Frontend;
 
+use Virtua\FreshMail\Model\GetScopeContext;
 use Magento\Backend\Block\Template;
 use Magento\Backend\Block\Widget\Button as WidgetButton;
 use Magento\Config\Block\System\Config\Form\Field;
@@ -18,13 +19,20 @@ class RefreshButton extends Field
      */
     protected $serializer;
 
+    /**
+     * @var GetScopeContext
+     */
+    protected $getScopeContext;
+
     public function __construct(
         Template\Context $context,
         Serializer\Json $serializer,
+        GetScopeContext  $getScopeContext,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->serializer = $serializer;
+        $this->getScopeContext = $getScopeContext;
     }
 
     /**
@@ -70,6 +78,9 @@ class RefreshButton extends Field
 
     protected function getRefreshUrl(): string
     {
-        return $this->getUrl('freshmail/system_config/refreshLists');
+        $scopeData = $this->getScopeContext->execute();
+        $url = $this->getUrl('freshmail/system_config/refreshLists');
+
+        return $url . 'scope/' . $scopeData['scope'] . '/scope_code/' . $scopeData['code'];
     }
 }
