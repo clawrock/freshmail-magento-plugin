@@ -9,5 +9,9 @@
         <job name="freshmail_process_request_queue" instance="Virtua\FreshMail\Cron\ProcessRequestQueue" method="execute">
             <schedule>* * * * *</schedule>
         </job>
+        <job name="freshmail_subscribers_full_sync"
+             instance="Virtua\FreshMail\Cron\SubscribersFullSyncCron" method="execute">
+            <schedule>0 3 * * *</schedule>
+        </job>
     </group>
 </config>

@@ -12,12 +12,14 @@ use Virtua\FreshMail\Exception\ApiException;
 interface SubscriberListServiceInterface
 {
     /**
+     * @param string|null $token
+     * @return array
      * @throws ApiException
      * @throws RequestException
      * @throws ServerException
      * @throws LocalizedException
      */
-    public function getLists(): array;
+    public function getLists(?string $token = null): array;
 
     /**
      * @throws ApiException

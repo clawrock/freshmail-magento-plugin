@@ -21,7 +21,7 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Set FreshMail Integration to enable/disable.</comment>
                 </field>
-                <field id="bearer_token" translate="label" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="bearer_token" translate="label" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Bearer Token</label>
                     <config_path>freshmail/connection/bearer_token</config_path>
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
